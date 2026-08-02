@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  color: #ede1bd;
+  background: #0f0d0a;
+  font-family: Inter, system-ui, sans-serif;
+  font-synthesis: none;
+  --ink: #17140f;
+  --panel: #211d17;
+  --panel-2: #2c261d;
+  --gold: #b8873e;
+  --gold-light: #e2c27a;
+  --green: #6ca890;
+  --cream: #eadfbf;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(101, 78, 40, .18), transparent 35rem),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px),
+    #0f0d0a;
+}
+button { font: inherit; }
+button:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+
+.game-shell {
+  width: min(1500px, 100%);
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.topbar {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 14px;
+  border: 1px solid #51442d;
+  background: linear-gradient(#1b1812, #12100c);
+  box-shadow: inset 0 0 0 2px #0d0b08, inset 0 0 0 3px #6d5530;
+}
+
+h1 { margin: 0; font-family: 'IM Fell English', Georgia, serif; font-weight: 400; color: var(--gold-light); font-size: clamp(1.25rem, 2.4vw, 2rem); letter-spacing: .04em; }
+h1 span { color: #c8b88f; font-size: .72em; }
+.eyebrow { margin: 0 0 2px; color: #8c8066; text-transform: uppercase; letter-spacing: .16em; font-size: .67rem; }
+.top-actions { display: flex; gap: 7px; }
+.top-actions button {
+  width: 40px; height: 38px; border: 1px solid #725a34; border-radius: 5px;
+  color: var(--cream); background: #282218; cursor: pointer;
+}
+.top-actions button:hover { background: #3a3021; }
+
+.objective-bar {
+  padding: 7px 12px;
+  border: 1px solid #56472f;
+  background: #171510;
+  color: #cbbf9d;
+  font-size: .88rem;
+}
+.objective-bar strong { color: var(--green); }
+
+.scene-frame {
+  position: relative;
+  width: 100%;
+  border: 3px solid #17130d;
+  box-shadow: 0 0 0 1px #7b6239, inset 0 0 30px #000;
+  background: #17130d;
+  overflow: hidden;
+}
+.scene-frame::before { content: ''; display: block; padding-top: 41%; }
+.scene-stage {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center top;
+  overflow: hidden;
+  cursor: crosshair;
+  isolation: isolate;
+}
+.scene-stage::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 50;
+  box-shadow: inset 0 0 45px 12px rgba(0,0,0,.62);
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+.ambient-light { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 53% 40%, transparent 0 25%, rgba(0,0,0,.08) 78%); }
+.rain-layer { display: none; }
+.harbor .rain-layer {
+  display: block; position: absolute; inset: -20%; pointer-events: none; z-index: 8; opacity: .25;
+  background-image: repeating-linear-gradient(105deg, transparent 0 17px, rgba(190,220,230,.5) 18px 19px, transparent 20px 37px);
+  animation: rain 1.2s linear infinite;
+}
+@keyframes rain { to { transform: translate3d(-20px, 45px, 0); } }
+
+.actor { position: absolute; z-index: 20; pointer-events: none; transform: translateX(-50%); transform-origin: 50% 100%; transition: left .72s cubic-bezier(.3,.1,.3,1); filter: drop-shadow(5px 7px 5px rgba(0,0,0,.6)); }
+.mara { bottom: 1%; width: clamp(65px, 10.8%, 175px); max-height: 72%; object-fit: contain; }
+.office .mara { width: clamp(70px, 11.5%, 185px); }
+.mara.walking { animation: walkBob .26s steps(2) infinite; }
+@keyframes walkBob { 0% { margin-bottom: 0; } 50% { margin-bottom: 5px; } }
+
+.hotspot { position: absolute; z-index: 35; border: 0; background: transparent; color: transparent; cursor: pointer; padding: 0; }
+.hotspot span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0; pointer-events: none; white-space: nowrap; background: rgba(13,12,9,.92); color: #eadcae; border: 1px solid #8e6e3e; padding: 4px 7px; border-radius: 3px; font-size: .72rem; }
+.hotspot:focus span, .hotspot:hover span { opacity: 1; }
+.hotspot:hover { outline: 1px dashed rgba(226,194,122,.36); outline-offset: -2px; }
+
+.scene-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 60;
+  min-height: 34px; display: grid; place-items: center;
+  padding: 7px 12px; color: #79b59f; background: linear-gradient(90deg, rgba(8,12,10,.92), rgba(14,15,12,.97), rgba(8,12,10,.92));
+  border-top: 1px solid #74613d; font-family: 'IM Fell English', Georgia, serif; font-size: clamp(.85rem, 1.4vw, 1.15rem); letter-spacing: .04em;
+}
+.toast { position: absolute; z-index: 90; left: 50%; top: 12%; transform: translateX(-50%); padding: 8px 12px; border: 1px solid var(--gold); background: rgba(20,17,12,.95); color: var(--gold-light); border-radius: 4px; }
+
+.package-prop {
+  position: absolute; z-index: 12; left: 28%; top: 65%; width: 5%; aspect-ratio: 1.3;
+  display: grid; place-items: center; transform: rotate(-4deg);
+  color: #502d18; font-family: Georgia, serif; font-weight: 700; font-size: 1.3rem;
+  border: 2px solid #6c482c; background: #b89b69; box-shadow: 0 5px 8px rgba(0,0,0,.55);
+  animation: parcelRattle 4s ease-in-out infinite;
+}
+.package-prop::before, .package-prop::after { content: ''; position: absolute; background: #6c482c; }
+.package-prop::before { width: 7%; height: 100%; left: 47%; }
+.package-prop::after { height: 9%; width: 100%; top: 45%; }
+.package-prop span { position: relative; z-index: 2; }
+.package-prop.unlocked { box-shadow: 0 0 14px rgba(226,194,122,.8); }
+.package-prop.gone { display: none; }
+@keyframes parcelRattle { 0%, 94%, 100% { transform: rotate(-4deg); } 96% { transform: rotate(1deg) translateX(3px); } 98% { transform: rotate(-7deg) translateX(-3px); } }
+
+.clock-hand { position: absolute; z-index: 15; left: 56.4%; top: 12.6%; width: 2px; height: 7%; background: rgba(20,14,10,.9); transform-origin: 50% 100%; transform: rotate(45deg); }
+.clock-hand.spinning { animation: clockSpin .5s linear infinite; }
+@keyframes clockSpin { to { transform: rotate(405deg); } }
+.alarm-flash .scene-stage { animation: alarmFlash .34s steps(2) infinite; }
+@keyframes alarmFlash { 50% { filter: sepia(.4) saturate(1.5) brightness(1.12); } }
+
+.prop-layer { position: absolute; z-index: 11; pointer-events: none; }
+.boat-layer { left: 36.7%; top: 21%; width: 35%; opacity: .28; transform-origin: 55% 90%; animation: boatRock 4.5s ease-in-out infinite; }
+.boat-layer.startled { opacity: .58; animation: boatStartle .25s ease-in-out 7; }
+@keyframes boatRock { 0%,100% { transform: rotate(-.25deg) translateY(0); } 50% { transform: rotate(.35deg) translateY(2px); } }
+@keyframes boatStartle { 50% { transform: rotate(1.2deg) translateY(-4px); } }
+.gull-layer { left: 26.6%; top: 1.3%; width: 12.8%; transform-origin: 50% 100%; animation: gullIdle 2.2s ease-in-out infinite; transition: left 1s cubic-bezier(.4,0,.2,1), top 1s cubic-bezier(.4,0,.2,1), transform 1s; filter: drop-shadow(3px 5px 3px rgba(0,0,0,.45)); }
+.gull-layer.lured { left: 27%; top: 59%; transform: rotate(32deg) scale(.8); animation: gullBucket .25s ease-in-out infinite; }
+@keyframes gullIdle { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-4px) rotate(1deg); } }
+@keyframes gullBucket { 50% { transform: rotate(22deg) scale(.8) translateY(4px); } }
+.water-ripple { position: absolute; z-index: 9; border: 2px solid rgba(185,212,211,.2); border-radius: 50%; width: 12%; height: 3%; animation: ripple 3s ease-out infinite; }
+.water-ripple.one { left: 44%; top: 53%; }.water-ripple.two { left: 35%; top: 49%; animation-delay: 1.4s; }
+@keyframes ripple { 0% { transform: scale(.3); opacity: 0; } 25% { opacity: .7; } 100% { transform: scale(1.8); opacity: 0; } }
+.fog-curtain { position: absolute; inset: 0; z-index: 45; pointer-events: none; background: radial-gradient(ellipse at center, transparent 0 18%, rgba(204,215,211,.5) 48%, rgba(155,173,172,.78) 100%); animation: fogPart 2.4s ease-in-out forwards; }
+@keyframes fogPart { 0% { opacity: 0; transform: scale(1.2); } 25% { opacity: 1; } 65% { clip-path: inset(0 44% 0 44%); opacity: .7; } 100% { clip-path: inset(0 50% 0 50%); opacity: 0; } }
+
+.control-deck { display: grid; grid-template-columns: minmax(280px, 31%) 1fr; gap: 8px; min-height: 205px; }
+.verbs-panel, .inventory-panel { border: 1px solid #695535; background: linear-gradient(#211d16, #15120e); box-shadow: inset 0 0 0 2px #0d0b08; }
+.verbs-panel { padding: 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.verb-button { min-height: 52px; display: flex; align-items: center; justify-content: flex-start; gap: 8px; padding: 7px 10px; border: 1px solid #5f5035; border-radius: 3px; background: #29241b; color: #d8caa4; cursor: pointer; font-family: 'IM Fell English', Georgia, serif; font-size: 1rem; }
+.verb-button span { font-family: sans-serif; font-size: 1.2rem; }
+.verb-button:hover { background: #373024; }
+.verb-button.active { color: #1b231e; background: #78a58e; border-color: #a7c9b6; }
+.inventory-panel { padding: 8px; min-width: 0; }
+.inventory-heading { height: 32px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: var(--gold-light); font-family: 'IM Fell English', Georgia, serif; }
+.inventory-heading small { color: #8f856f; font-family: Inter, sans-serif; font-size: .7rem; text-align: right; }
+.inventory-grid { display: grid; grid-template-columns: repeat(8, minmax(68px, 1fr)); gap: 5px; }
+.inventory-item, .inventory-empty { min-width: 0; height: 148px; border: 1px solid #514630; border-radius: 3px; background: #26231d; }
+.inventory-item { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 4px; padding: 5px; color: #d8c89f; cursor: pointer; }
+.inventory-item:hover { background: #363025; border-color: #9a7844; }
+.inventory-item.selected { background: #354f43; border-color: #94c5ad; box-shadow: inset 0 0 0 2px #17251f; }
+.inventory-item img { width: 100%; min-height: 0; flex: 1; object-fit: contain; image-rendering: auto; }
+.inventory-item span { display: grid; place-items: center; min-height: 30px; font-family: 'IM Fell English', Georgia, serif; font-size: .78rem; line-height: 1; text-align: center; }
+.inventory-empty { opacity: .55; background: linear-gradient(135deg, #211e19, #29261f); }
+.footer-note { padding: 3px 8px 8px; color: #726b5d; font-size: .66rem; text-align: center; }
+
+.dialogue-backdrop { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: flex-end; justify-content: center; padding: 20px; background: rgba(7,6,5,.28); }
+.dialogue-box { width: min(980px, 100%); display: grid; grid-template-columns: 72px 1fr; gap: 14px; padding: 14px; border: 2px solid #856a3d; border-radius: 5px; background: linear-gradient(#211d16, #15120e); box-shadow: 0 14px 50px rgba(0,0,0,.65), inset 0 0 0 2px #0d0b08; }
+.portrait { width: 68px; height: 68px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #886b3c; background: #30271c; color: #d8ba70; font-family: 'IM Fell English', Georgia, serif; font-size: 2rem; }
+.mara-portrait { background: #4b3022; color: #f0d2a0; }
+.dialogue-content strong { color: var(--gold-light); font-family: 'IM Fell English', Georgia, serif; font-size: 1.15rem; }
+.dialogue-content p { margin: 5px 0 10px; color: #eee1bd; line-height: 1.45; }
+.continue-button, .dialogue-choices button, .primary-button { border: 1px solid #7b623a; border-radius: 3px; background: #332b1e; color: #ead8a7; padding: 9px 13px; cursor: pointer; }
+.continue-button:hover, .dialogue-choices button:hover, .primary-button:hover { background: #4b3c28; }
+.continue-button { float: right; }
+.dialogue-choices { display: grid; gap: 6px; }
+.dialogue-choices button { text-align: left; }
+
+.ending-shell { position: relative; align-items: center; justify-content: center; overflow: hidden; background: #0e1516; }
+.ending-fog { position: absolute; inset: -20%; background: radial-gradient(circle, rgba(120,142,145,.25), rgba(8,13,14,.95) 58%); filter: blur(8px) brightness(.45); animation: endingFog 12s ease-in-out infinite alternate; }
+@keyframes endingFog { to { transform: scale(1.08) translateX(-2%); } }
+.ending-card { position: relative; z-index: 2; width: min(680px, 94%); padding: clamp(24px, 5vw, 54px); text-align: center; border: 1px solid #846d43; background: rgba(16,15,12,.9); box-shadow: 0 20px 70px #000; }
+.ending-card h1 { font-size: clamp(2rem, 7vw, 4.4rem); line-height: .9; }
+.ending-card h1 span { display: inline-block; margin-top: 12px; }
+.ending-copy { color: #b9b09b; line-height: 1.6; }
+.ending-card blockquote { margin: 24px 0; color: #e7d9b2; font-family: 'IM Fell English', Georgia, serif; font-size: 1.1rem; line-height: 1.6; }
+.primary-button { font-size: 1rem; }
+
+@media (max-width: 900px) {
+  .game-shell { padding: 4px; gap: 4px; }
+  .topbar { min-height: 52px; padding: 6px 9px; }
+  .eyebrow { display: none; }
+  .top-actions button { width: 34px; height: 34px; }
+  .scene-frame::before { padding-top: 55%; }
+  .scene-stage { background-size: auto 100%; background-position: center top; }
+  .control-deck { grid-template-columns: 1fr; min-height: auto; }
+  .verbs-panel { grid-template-columns: repeat(6, 1fr); }
+  .verb-button { min-height: 44px; justify-content: center; padding: 5px; font-size: .76rem; flex-direction: column; gap: 1px; }
+  .verb-button span { font-size: 1rem; }
+  .inventory-grid { grid-template-columns: repeat(4, 1fr); }
+  .inventory-item, .inventory-empty { height: 112px; }
+  .inventory-empty:nth-of-type(n+5) { display: none; }
+  .dialogue-backdrop { padding: 8px; }
+}
+
+@media (max-width: 520px) {
+  h1 { font-size: 1.05rem; }
+  h1 span { display: block; }
+  .objective-bar { font-size: .73rem; }
+  .scene-frame::before { padding-top: 68%; }
+  .mara { width: 14%; }
+  .scene-caption { min-height: 29px; font-size: .78rem; }
+  .verbs-panel { grid-template-columns: repeat(3, 1fr); }
+  .inventory-heading small { display: none; }
+  .inventory-item, .inventory-empty { height: 100px; }
+  .dialogue-box { grid-template-columns: 48px 1fr; gap: 8px; padding: 10px; }
+  .portrait { width: 46px; height: 46px; font-size: 1.3rem; }
+  .dialogue-content p { font-size: .88rem; }
+}
