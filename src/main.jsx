@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { combineInventory, INITIAL_FLAGS, ITEM_DEFS, START_STATE } from './gameLogic';
+import LayeredScene from './sceneEngine/LayeredScene';
+import LayerEditor, { useSceneLayerOverrides } from './sceneEngine/LayerEditor';
+import { clampToWalkArea } from './sceneEngine/layerUtils';
+import { SCENES } from './scenes';
 import './styles.css';
 
 const BASE = import.meta.env.BASE_URL;
@@ -25,52 +29,6 @@ const PORTRAITS = {
   'Mechanical Gull': 'portrait-gull.jpg'
 };
 
-const OFFICE_HOTSPOTS = [
-  { id: 'pindle', label: 'Mr. Pindle', x: 17, y: 37, w: 19, h: 29, walkX: 28 },
-  { id: 'terminal', label: 'pneumatic terminal', x: 22, y: 66, w: 16, h: 20, walkX: 31 },
-  { id: 'poster', label: 'emergency procedure', x: 35, y: 18, w: 9, h: 28, walkX: 40 },
-  { id: 'clock', label: 'official municipal clock', x: 50, y: 2, w: 14, h: 24, walkX: 55 },
-  { id: 'door', label: 'staff-only door', x: 51, y: 28, w: 12, h: 47, walkX: 55 },
-  { id: 'fishbowl', label: 'Mr. Ledger’s fishbowl', x: 66, y: 44, w: 14, h: 31, walkX: 69 },
-  { id: 'alarm', label: 'fire alarm', x: 68, y: 67, w: 10, h: 17, walkX: 70 },
-  { id: 'shelf', label: 'lost-property shelf', x: 79, y: 33, w: 20, h: 48, walkX: 81 },
-  { id: 'forms', label: 'complaint forms', x: 1, y: 65, w: 19, h: 25, walkX: 22 },
-  { id: 'map', label: 'city map', x: 72, y: 2, w: 23, h: 37, walkX: 73 },
-  { id: 'lamp', label: 'desk lamp', x: 17, y: 63, w: 10, h: 15, walkX: 26 }
-];
-
-const HARBOR_HOTSPOTS = [
-  { id: 'brine', label: 'Madame Brine', x: 78, y: 33, w: 20, h: 43, walkX: 75 },
-  { id: 'captain', label: 'Captain Nib', x: 59, y: 34, w: 16, h: 48, walkX: 58 },
-  { id: 'bird', label: 'mechanical gull', x: 24, y: 3, w: 15, h: 27, walkX: 31 },
-  { id: 'bucket', label: 'empty fish bucket', x: 24, y: 68, w: 12, h: 18, walkX: 34 },
-  { id: 'fish', label: 'sardines', x: 79, y: 62, w: 16, h: 20, walkX: 75 },
-  { id: 'pump', label: 'broken bilge pump', x: 48, y: 65, w: 10, h: 20, walkX: 49 },
-  { id: 'boat', label: 'The Misty Minnow', x: 39, y: 22, w: 30, h: 54, walkX: 50 },
-  { id: 'lighthouse', label: 'abandoned lighthouse', x: 36, y: 7, w: 9, h: 27, walkX: 43 },
-  { id: 'hat', label: 'ceremonial captain’s hat', x: 31, y: 70, w: 9, h: 12, walkX: 36, conditional: 'birdLured' },
-  { id: 'tavern', label: 'The Rusty Kettle', x: 0, y: 12, w: 17, h: 62, walkX: 17 }
-];
-
-const SCENES = {
-  office: {
-    name: 'Department of Lost Causes',
-    background: 'office-bg-v2.jpg',
-    backFix: null,
-    front: 'office-front.png',
-    worldScale: 1.18,
-    hotspots: OFFICE_HOTSPOTS
-  },
-  harbor: {
-    name: 'Gannet’s End Harbor',
-    background: 'harbor-bg-v3.jpg',
-    backFix: null,
-    front: 'harbor-front.png',
-    worldScale: 1.34,
-    hotspots: HARBOR_HOTSPOTS
-  }
-};
-
 const WRONG_COMBINATIONS = [
   'That would create paperwork, not progress.',
   'Mara briefly considers it. Civilization survives.',
@@ -88,7 +46,8 @@ function savedGame() {
       ...START_STATE,
       ...parsed,
       flags: { ...INITIAL_FLAGS, ...parsed.flags },
-      maraX: { ...START_STATE.maraX, ...(parsed.maraX || {}) }
+      maraX: { ...START_STATE.maraX, ...(parsed.maraX || {}) },
+      maraY: { ...START_STATE.maraY, ...(parsed.maraY || {}) }
     };
   } catch {
     return START_STATE;
@@ -110,6 +69,7 @@ function App() {
   const [alarmFlash, setAlarmFlash] = useState(false);
   const [fogBurst, setFogBurst] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
+  const [showLayerEditor, setShowLayerEditor] = useState(false);
   const audioRef = useRef(null);
   const timers = useRef([]);
   const viewportRef = useRef(null);
@@ -117,6 +77,7 @@ function App() {
   const harborStarted = useRef(false);
 
   const scene = SCENES[game.scene] || SCENES.office;
+  const [layerOverrides, setLayerOverrides] = useSceneLayerOverrides(scene.id);
 
   const schedule = (fn, delay) => {
     const id = window.setTimeout(fn, delay);
@@ -245,14 +206,21 @@ function App() {
     return () => window.removeEventListener('resize', recenter);
   }, [game.scene]);
 
-  const walkTo = (x, action) => {
+  const walkTo = (x, y, action) => {
     if (moving || dialogue || itemPopup || transitioning) return;
-    const old = game.maraX[game.scene] ?? 50;
-    setFacing(x < old ? 'left' : 'right');
-    const duration = Math.min(1350, Math.max(320, Math.abs(old - x) * 20));
+    const currentX = game.maraX[game.scene] ?? 50;
+    const currentY = game.maraY[game.scene] ?? scene.walkArea.maxY;
+    const destination = clampToWalkArea(scene, x, y ?? currentY);
+    setFacing(destination.x < currentX ? 'left' : 'right');
+    const distance = Math.hypot(destination.x - currentX, (destination.y - currentY) * 1.4);
+    const duration = Math.min(1450, Math.max(320, distance * 21));
     setMoving(true);
-    setCameraPx(cameraFor(x));
-    setGame((g) => ({ ...g, maraX: { ...g.maraX, [g.scene]: x } }));
+    setCameraPx(cameraFor(destination.x));
+    setGame((g) => ({
+      ...g,
+      maraX: { ...g.maraX, [g.scene]: destination.x },
+      maraY: { ...g.maraY, [g.scene]: destination.y }
+    }));
     schedule(() => {
       setMoving(false);
       if (action) action();
@@ -713,7 +681,7 @@ function App() {
                   onDone: () => {
                     setTransitioning(true);
                     schedule(() => {
-                      setGame((g) => ({ ...g, scene: 'harbor', maraX: { ...g.maraX, harbor: 34 } }));
+                      setGame((g) => ({ ...g, scene: 'harbor', maraX: { ...g.maraX, harbor: 34 }, maraY: { ...g.maraY, harbor: 84 } }));
                       setTransitioning(false);
                     }, 750);
                   }
@@ -841,7 +809,7 @@ function App() {
     const item = selectedItem;
     const activeVerb = item ? 'use' : verb;
     setSelectedItem(null);
-    walkTo(hotspot.walkX ?? 50, () => {
+    walkTo(hotspot.walkX ?? 50, hotspot.walkY ?? game.maraY[game.scene] ?? 82, () => {
       if (game.scene === 'office') resolveOffice(hotspot.id, activeVerb, item);
       else resolveHarbor(hotspot.id, activeVerb, item);
     });
@@ -849,14 +817,18 @@ function App() {
 
   const stageClick = (event) => {
     if (dialogue || itemPopup || transitioning || game.scene === 'ending') return;
-    if (event.target.closest('.hotspot, .actor, .animated-prop')) return;
+    if (event.target.closest('.hotspot, .actor, .scene-layer')) return;
     if (verb !== 'walk' || selectedItem) return;
     const viewportRect = viewportRef.current?.getBoundingClientRect();
     const viewportWidth = viewportRef.current?.clientWidth || event.currentTarget.clientWidth;
+    const viewportHeight = viewportRef.current?.clientHeight || event.currentTarget.clientHeight;
     const viewportLeft = viewportRect?.left || 0;
+    const viewportTop = viewportRect?.top || 0;
     const worldWidth = viewportWidth * scene.worldScale;
     const x = ((event.clientX - viewportLeft + cameraPx) / worldWidth) * 100;
-    walkTo(Math.max(8, Math.min(92, x)));
+    const y = ((event.clientY - viewportTop) / viewportHeight) * 100;
+    const destination = clampToWalkArea(scene, x, y);
+    walkTo(destination.x, destination.y);
   };
 
   const resetGame = () => {
@@ -871,6 +843,7 @@ function App() {
     setItemPopup(null);
     setThought('');
     setFogBurst(false);
+    setShowLayerEditor(false);
   };
 
   const hint = () => {
@@ -979,70 +952,38 @@ function App() {
         <div className="top-actions">
           <button onClick={hint} aria-label="Show hint">?</button>
           <button onClick={() => setGame((g) => ({ ...g, mute: !g.mute }))} aria-label={game.mute ? 'Enable sound' : 'Mute sound'}>{game.mute ? '🔇' : '🔊'}</button>
+          <button onClick={() => setShowLayerEditor((value) => !value)} aria-label="Open layer editor">Layers</button>
           <button onClick={resetGame} aria-label="Restart">↻</button>
         </div>
       </header>
 
       <section className="objective-bar"><span>Current objective</span><strong>{objective}</strong></section>
 
-      <section className={`scene-viewport ${game.scene} ${fogBurst ? 'fog-burst' : ''}`} ref={viewportRef}>
-        <div
-          className="scene-world"
-          style={{
-            width: `${scene.worldScale * 100}%`,
-            transform: `translate3d(-${cameraPx}px,0,0)`,
-            transitionDuration: moving ? '700ms' : '450ms'
-          }}
-          onClick={stageClick}
-          role="application"
-          aria-label={scene.name}
-        >
-          <img className="scene-bg" src={`${BASE}assets/${scene.background}`} alt="" aria-hidden="true" />
-          {scene.backFix && <img className="scene-back-fix" src={`${BASE}assets/${scene.backFix}`} alt="" aria-hidden="true" />}
-
-          {game.scene === 'office' && (
-            <>
-              <div className={`clock-hand ${clockSpin ? 'spinning' : ''}`} />
-              <div className={`package-prop ${game.flags.packageUnlocked ? 'unlocked' : ''} ${game.flags.packageOpened ? 'gone' : ''}`}>?</div>
-            </>
-          )}
-
-          {game.scene === 'harbor' && (
-            <>
-              <img className={`animated-prop boat-layer ${fogBurst ? 'startled' : ''}`} src={`${BASE}assets/boat-rock-layer.png`} alt="The Misty Minnow" />
-              <img className={`animated-prop gull-layer ${game.flags.birdLured ? 'lured' : ''}`} src={`${BASE}assets/gull-clean.png`} alt="Mechanical gull" />
-              <div className="water-ripple ripple-one" /><div className="water-ripple ripple-two" />
-            </>
-          )}
-
-          <img
-            className={`actor mara ${moving ? 'walking' : ''} facing-${facing}`}
-            src={`${BASE}assets/mara-clean.png`}
-            alt="Mara Quibble"
-            style={{ left: `${game.maraX[game.scene]}%` }}
-          />
-
-          {visibleHotspots.map((hotspot) => (
-            <button
-              key={hotspot.id}
-              className="hotspot"
-              style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%`, width: `${hotspot.w}%`, height: `${hotspot.h}%` }}
-              onMouseEnter={() => setHoverText(`${selectedItem ? `Use ${ITEM_DEFS[selectedItem].name} with` : VERBS.find(([id]) => id === verb)?.[1]} ${hotspot.label}`)}
-              onMouseLeave={() => setHoverText(objective)}
-              onFocus={() => setHoverText(hotspot.label)}
-              onClick={(event) => { event.stopPropagation(); interact(hotspot); }}
-              aria-label={hotspot.label}
-            ><span>{hotspot.label}</span></button>
-          ))}
-
-          <img className="scene-front" src={`${BASE}assets/${scene.front}`} alt="" aria-hidden="true" />
-          <div className="rain-layer" aria-hidden="true" />
-          {fogBurst && <div className="fog-curtain" />}
-        </div>
-
+      <LayeredScene
+        scene={scene}
+        flags={game.flags}
+        actor={{ x: game.maraX[game.scene] ?? 50, y: game.maraY[game.scene] ?? 84 }}
+        moving={moving}
+        facing={facing}
+        cameraPx={cameraPx}
+        onStageClick={stageClick}
+        visibleHotspots={visibleHotspots}
+        onHotspotEnter={(hotspot) => setHoverText(`${selectedItem ? `Use ${ITEM_DEFS[selectedItem].name} with` : VERBS.find(([id]) => id === verb)?.[1]} ${hotspot.label}`)}
+        onHotspotLeave={() => setHoverText(objective)}
+        onHotspotClick={interact}
+        runtimeClasses={{
+          'clock-hand': clockSpin ? 'spinning' : '',
+          'package-in-terminal': game.flags.packageUnlocked ? 'unlocked' : '',
+          boat: fogBurst ? 'startled' : ''
+        }}
+        overrides={layerOverrides}
+        viewportRef={viewportRef}
+        viewportClassName={fogBurst ? 'fog-burst' : ''}
+      >
         <div className="scene-caption" aria-live="polite">{hoverText}</div>
         {thought && <div className="thought-bubble" aria-live="polite"><strong>Mara thinks</strong>{thought}</div>}
-      </section>
+        {fogBurst && <div className="fog-curtain" />}
+      </LayeredScene>
 
       <section className="control-deck">
         <div className="verbs-panel" aria-label="Actions">
@@ -1117,6 +1058,7 @@ function App() {
         </div>
       )}
 
+      {showLayerEditor && <LayerEditor scene={scene} actorY={game.maraY[game.scene] ?? 84} overrides={layerOverrides} setOverrides={setLayerOverrides} onClose={() => setShowLayerEditor(false)} />}
       {transitioning && <div className="scene-transition"><span>Eventually…</span></div>}
     </main>
   );

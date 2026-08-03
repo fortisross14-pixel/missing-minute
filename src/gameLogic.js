@@ -54,6 +54,7 @@ export const START_STATE = {
   inventory: ['id-card', 'peppermint', 'complaint'],
   flags: { ...INITIAL_FLAGS },
   maraX: { office: 48, harbor: 34 },
+  maraY: { office: 84, harbor: 84 },
   mute: false
 };
 

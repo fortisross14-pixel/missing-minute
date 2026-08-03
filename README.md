@@ -1,4 +1,8 @@
-# Mara Quibble and the Missing Minute — Layered POC v0.2
+# Mara Quibble and the Missing Minute — Layered POC v0.3
+
+## Editable 2.5D room layers
+
+The two rooms now use scene-specific layer files, dynamic actor depth bands, stateful object sprites, and an in-game layer editor. See `LAYER_ENGINE_GUIDE.md`.
 
 A two-room point-and-click adventure proof of concept built with Vite and React.
 
