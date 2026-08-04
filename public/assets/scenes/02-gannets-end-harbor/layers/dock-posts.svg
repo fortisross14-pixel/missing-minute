@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="310" viewBox="0 0 620 310">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<g filter="url(#shadow)" stroke="#2a1c16"><path d="M70 20V300M260 65V300M510 25V300" stroke="#4f392c" stroke-width="46"/><path d="M46 65H94M236 110H284M486 70H534" stroke="#b17c42" stroke-width="12"/><path d="M80 110Q250 210 505 105" fill="none" stroke="#7a5c40" stroke-width="16"/><path d="M70 20Q80 5 90 20M260 65Q270 50 280 65M510 25Q520 10 530 25" fill="none" stroke="#c19a5d" stroke-width="8"/></g>
+</svg>

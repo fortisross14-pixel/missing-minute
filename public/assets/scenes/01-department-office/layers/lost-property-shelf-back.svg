@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="440" viewBox="0 0 430 440">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<rect x="10" y="8" width="410" height="422" fill="#233e3a" stroke="#2b1a12" stroke-width="10" filter="url(#shadow)"/>
+<g fill="#87603b" stroke="#3b2618" stroke-width="5"><rect x="22" y="105" width="386" height="18"/><rect x="22" y="225" width="386" height="18"/><rect x="22" y="345" width="386" height="18"/></g>
+<g fill="#d1b572" stroke="#4d3020" stroke-width="4"><path d="M55 75L90 25L125 75z"/><rect x="170" y="42" width="82" height="45"/><circle cx="330" cy="58" r="31"/></g>
+<g fill="#944238" stroke="#4c2d20" stroke-width="4"><rect x="70" y="151" width="62" height="48"/><path d="M185 195Q220 132 252 195z"/><rect x="300" y="145" width="52" height="60"/></g>
+<g fill="#c8a86b" stroke="#4c2e1d" stroke-width="4"><rect x="55" y="270" width="105" height="48"/><circle cx="240" cy="292" r="32"/><path d="M310 320L370 260L390 320z"/></g>
+</svg>

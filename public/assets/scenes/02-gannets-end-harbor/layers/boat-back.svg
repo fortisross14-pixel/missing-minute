@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<g filter="url(#shadow)" stroke="#2a1b16" stroke-linejoin="round">
+ <path d="M130 225H620L680 350H78z" fill="#e0d1ae" stroke-width="10"/>
+ <path d="M175 210V95H495V225" fill="#315c60" stroke-width="10"/><path d="M215 115H320V190H215zM350 115H455V190H350z" fill="#9fc1bd" stroke-width="7"/>
+ <path d="M365 95V36H445V95" fill="#8e3a31" stroke-width="9"/><path d="M392 38V5" stroke="#c7a05b" stroke-width="8"/><path d="M392 8L455 35L392 54z" fill="#d6bd7b" stroke-width="5"/>
+ <rect x="230" y="220" width="245" height="52" fill="#284b4d" stroke-width="7"/><text x="352" y="254" text-anchor="middle" font-family="Georgia" font-size="24" fill="#f0dba9">MISTY MINNOW</text>
+ <path d="M90 245Q375 298 670 245" fill="none" stroke="#8e352f" stroke-width="20"/>
+</g>
+</svg>

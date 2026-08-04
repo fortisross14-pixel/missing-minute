@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="280" viewBox="0 0 420 280">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<rect x="10" y="10" width="400" height="260" rx="5" fill="#d9c89b" stroke="#51321d" stroke-width="8" filter="url(#shadow)"/>
+<path d="M40 80C110 20 170 130 235 70S350 50 385 105M55 200C130 150 210 220 270 165S350 145 390 190" fill="none" stroke="#376667" stroke-width="12"/>
+<path d="M70 40L110 240M170 25L155 255M255 30L280 250M350 40L330 245" stroke="#a16e3a" stroke-width="5" opacity=".8"/>
+<g fill="#8a2d27"><circle cx="92" cy="167" r="10"/><circle cx="315" cy="128" r="10"/></g>
+<text x="90" y="195" font-family="Georgia" font-size="17" fill="#4d3020">DEPARTMENT</text><text x="275" y="112" font-family="Georgia" font-size="17" fill="#4d3020">GANNET’S END</text>
+<path d="M105 160Q195 95 305 128" fill="none" stroke="#8d2d29" stroke-width="5" stroke-dasharray="12 10"/>
+</svg>

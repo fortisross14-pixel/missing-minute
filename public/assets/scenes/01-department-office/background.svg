@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="900" viewBox="0 0 2400 900">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<rect width="2400" height="900" fill="#171815"/>
+<rect width="2400" height="545" fill="#315e58"/>
+<path d="M0 0H2400V80H0z" fill="#193631"/>
+<path d="M0 445H2400V565H0z" fill="#1c3e3b"/>
+<path d="M0 535H2400V900H0z" fill="#6b472d"/>
+<path d="M0 550L1200 515L2400 550V900H0z" fill="#775039"/>
+<g stroke="#4d3024" stroke-width="4" opacity=".65">
+ <path d="M1200 515L300 900M1200 515L650 900M1200 515L1000 900M1200 515L1400 900M1200 515L1750 900M1200 515L2100 900"/>
+ <path d="M0 650H2400M0 760H2400"/>
+</g>
+<g fill="#182d2d" stroke="#c59555" stroke-width="7" filter="url(#shadow)">
+ <rect x="70" y="105" width="230" height="360" rx="7"/><rect x="330" y="105" width="230" height="360" rx="7"/>
+</g>
+<g fill="#86a4a2" opacity=".62"><rect x="86" y="122" width="198" height="326"/><rect x="346" y="122" width="198" height="326"/></g>
+<g stroke="#dfc79d" stroke-width="8"><path d="M185 110V460M75 280H296M445 110V460M335 280H556"/></g>
+<g opacity=".35" stroke="#e7f0ea" stroke-width="3"><path d="M105 135L180 235M220 150L275 225M365 155L430 245M470 145L525 220"/></g>
+<rect x="1450" y="175" width="235" height="370" rx="5" fill="#21423e" stroke="#c18d4c" stroke-width="10"/>
+<rect x="1480" y="215" width="175" height="300" fill="#17302e" stroke="#0c201f" stroke-width="5"/>
+<circle cx="1625" cy="370" r="10" fill="#d2ad61"/>
+<g fill="#233d39" stroke="#1a2b29" stroke-width="5">
+ <rect x="620" y="235" width="180" height="245"/><rect x="818" y="235" width="180" height="245"/>
+ <rect x="620" y="270" width="378" height="9" fill="#c08b4c"/><rect x="620" y="360" width="378" height="9" fill="#c08b4c"/>
+</g>
+<g fill="#d1a65b"><rect x="646" y="300" width="80" height="22"/><rect x="750" y="300" width="130" height="22"/><rect x="665" y="390" width="110" height="22"/></g>
+<path d="M0 78H2400" stroke="#d2a75d" stroke-width="8"/>
+<path d="M0 540H2400" stroke="#c48d51" stroke-width="12"/>
+</svg>

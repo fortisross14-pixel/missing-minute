@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="100" viewBox="0 0 140 100">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs><g transform="rotate(-5 70 50)" filter="url(#shadow)"><rect x="12" y="12" width="116" height="76" rx="7" fill="#d9c99f" stroke="#4a2e1d" stroke-width="6"/><rect x="22" y="24" width="34" height="42" fill="#6b8a82" stroke="#3a2a21" stroke-width="4"/><circle cx="39" cy="38" r="8" fill="#d0a078"/><path d="M29 62Q39 48 49 62" fill="#8f372f"/><text x="88" y="36" text-anchor="middle" font-family="Georgia" font-size="11" fill="#7a2825">MARA QUIBBLE</text><text x="90" y="53" text-anchor="middle" font-family="Georgia" font-size="8" fill="#274c48">RETRIEVAL CLERK</text><path d="M72 69H118" stroke="#9a6a39" stroke-width="4"/></g></svg>

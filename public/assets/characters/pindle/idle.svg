@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="390" viewBox="0 0 240 390">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<g filter="url(#shadow)" stroke="#2b1a15" stroke-linejoin="round">
+ <path d="M52 138Q120 110 188 138L184 335H55z" fill="#415b52" stroke-width="8"/>
+ <path d="M76 142L106 188L137 142L168 185L181 138Q123 113 59 138z" fill="#704239" stroke-width="6"/>
+ <path d="M86 335L78 374H117L123 335M142 335L148 374H188L177 335" fill="#2e332e" stroke-width="7"/>
+ <ellipse cx="122" cy="86" rx="62" ry="69" fill="#d6aa7c" stroke-width="8"/>
+ <path d="M60 80Q72 18 127 20Q184 25 185 83Q153 54 119 55Q89 77 60 80z" fill="#c9c1ad" stroke-width="8"/>
+ <path d="M68 62Q75 30 102 25M142 25Q174 35 180 67" fill="none" stroke="#ece3ce" stroke-width="9"/>
+ <path d="M84 88H113M132 88H161M113 88H132" stroke="#593a2b" stroke-width="5"/><rect x="79" y="75" width="39" height="29" rx="8" fill="#a9c6bd" fill-opacity=".35" stroke="#503125" stroke-width="4"/><rect x="128" y="75" width="39" height="29" rx="8" fill="#a9c6bd" fill-opacity=".35" stroke="#503125" stroke-width="4"/>
+ <path d="M101 120Q122 130 145 118" fill="none" stroke="#77433b" stroke-width="5"/>
+ <path d="M72 166L28 252L51 269L93 196" fill="#d6aa7c" stroke-width="7"/><path d="M170 165L207 254L184 267L148 195" fill="#d6aa7c" stroke-width="7"/>
+ <path d="M71 224H174V292H71z" fill="#e0d2ad" stroke="#4d301e" stroke-width="6" transform="rotate(-3 71 224)"/><path d="M88 244H158M88 260H144" stroke="#76543a" stroke-width="4"/>
+</g></svg>

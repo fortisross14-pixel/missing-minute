@@ -1,0 +1,17 @@
+MARA QUIBBLE FOUNDATION v1.0.0
+
+This is a full replacement baseline, not a patch over v0.3.
+
+NEW FOUNDATION:
+- Modular engine and UI
+- Data-driven Office scene
+- Data-driven Harbor scene
+- Clean vector backgrounds
+- Transparent vector character sprites
+- Individually named z-order layers
+- Stateful pickable-object art
+- Full initial dialogue and puzzle implementation
+- Incremental patching documentation
+
+NEXT EXPECTED PATCH:
+Scene 03 — Lighthouse exterior / landing

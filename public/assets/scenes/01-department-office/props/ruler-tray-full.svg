@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="88" viewBox="0 0 220 88">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<path d="M8 35H212V78H8z" fill="#684429" stroke="#321e13" stroke-width="6" filter="url(#shadow)"/>
+<rect x="20" y="12" width="178" height="19" rx="5" fill="#ddb873" stroke="#51311d" stroke-width="4" transform="rotate(-5 20 12)"/><path d="M40 13V27M65 13V27M90 13V27M115 13V27M140 13V27M165 13V27" stroke="#52331f" stroke-width="2"/>
+<rect x="55" y="28" width="148" height="18" rx="5" fill="#c8944f" stroke="#51311d" stroke-width="4" transform="rotate(7 55 28)"/>
+<text x="110" y="72" text-anchor="middle" font-family="Georgia" font-size="12" fill="#ead9ad">MATCHED PAIRS</text>
+</svg>

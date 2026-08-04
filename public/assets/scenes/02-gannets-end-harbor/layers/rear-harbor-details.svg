@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2900" height="900" viewBox="0 0 2900 900">
+    <defs>
+      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
+      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
+      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
+      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
+      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
+    </defs>
+<!-- tavern facade and harbor signs; all rear and non-interactive -->
+<g filter="url(#rough)"><path d="M20 280H570V645H20z" fill="#4d3a31" stroke="#251a17" stroke-width="12"/><path d="M0 280L295 125L590 280z" fill="#79362e" stroke="#2c1d19" stroke-width="12"/><rect x="105" y="385" width="170" height="260" fill="#1a2c2d" stroke="#bb8a4b" stroke-width="9"/><rect x="330" y="350" width="155" height="150" fill="#557276" stroke="#c09355" stroke-width="9"/><path d="M350 370L465 480M465 370L350 480" stroke="#d4c49b" stroke-width="7"/><rect x="130" y="250" width="330" height="80" rx="8" fill="#d9c59a" stroke="#4b2c1c" stroke-width="9"/><text x="295" y="300" text-anchor="middle" font-family="Georgia" font-size="38" font-weight="bold" fill="#7b2c28">THE RUSTY KETTLE</text><rect x="115" y="525" width="195" height="70" fill="#d8c79e" stroke="#4c2f1f" stroke-width="6"/><text x="212" y="554" text-anchor="middle" font-family="Georgia" font-size="15" fill="#7d2925">CLOSED DUE TO</text><text x="212" y="578" text-anchor="middle" font-family="Georgia" font-size="15" fill="#7d2925">WEATHER INSIDE</text></g>
+<rect x="610" y="530" width="270" height="80" rx="5" fill="#d7c49a" stroke="#4a2d1d" stroke-width="8"/><text x="745" y="562" text-anchor="middle" font-family="Georgia" font-size="19" fill="#772824">GANNET’S END HARBOR</text><text x="745" y="588" text-anchor="middle" font-family="Georgia" font-size="13" fill="#2f504c">FOG, FISH &amp; QUESTIONABLE DECISIONS</text>
+</svg>
