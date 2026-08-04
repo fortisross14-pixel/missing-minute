@@ -1,4 +1,5 @@
-const A = `${import.meta.env.BASE_URL}assets/inventory/`;
+const BASE_URL = import.meta.env?.BASE_URL ?? "/";
+const A = `${BASE_URL}assets/inventory/`;
 
 export const ITEMS = {
   'employee-id': { name:'Employee ID', description:'Mara Quibble, Junior Retrieval Clerk. The photograph displays confidence she does not remember having.', icon:`${A}employee-id.svg` },
