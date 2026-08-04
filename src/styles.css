@@ -137,3 +137,19 @@ body{background:radial-gradient(circle at 50% 0,#25302d 0,#101718 46%,#060909 10
 .dialogue-text{color:#f2dfb6}.dialogue-speaker{color:#e2b85d}
 .mara-thought,.message-toast{font-family:Georgia,serif}
 @media(max-width:850px){.scene-viewport{height:clamp(370px,69vw,590px)}.inventory-grid{grid-template-columns:repeat(5,1fr)}}
+
+
+/* v1.0.3 — scene 1 layout polish */
+.game-controls{display:grid;grid-template-columns:340px 1fr;grid-template-areas:'status status' 'verbs inventory';gap:0;background:#17110d}
+.game-controls .status-strip{grid-area:status;order:0}
+.game-controls .action-bar{grid-area:verbs;align-content:start;grid-template-columns:repeat(2,minmax(0,1fr));padding:10px 8px;border-right:2px solid #6d4c2b;border-bottom:none;min-height:228px}
+.game-controls .inventory-panel{grid-area:inventory;padding-top:10px}
+.game-controls .inventory-title{text-align:left;padding-left:8px}
+.scene-viewport{height:clamp(500px,58vw,780px)}
+.status-strip{font-size:18px;min-height:44px}
+.action-bar button img{width:100%;height:auto}
+@media(max-width:900px){
+  .game-controls{grid-template-columns:1fr;grid-template-areas:'status' 'verbs' 'inventory'}
+  .game-controls .action-bar{grid-template-columns:repeat(3,minmax(0,1fr));min-height:unset;border-right:none;border-bottom:1px solid #6d4c2b}
+  .game-controls .inventory-title{text-align:center;padding-left:0}
+}
