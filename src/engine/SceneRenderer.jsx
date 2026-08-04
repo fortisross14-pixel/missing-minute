@@ -77,7 +77,7 @@ export default function SceneRenderer({scene,flags,position,onPosition,onHotspot
         {layers.map((layer)=><SceneLayer key={layer.id} layer={layer} flags={flags}/>)}
         <img
           className={`player-actor ${moving?'is-walking':'is-idle'} facing-${facing}`}
-          src={moving?'/assets/characters/mara/walk.svg':'/assets/characters/mara/idle.svg'}
+          src={moving ? `${import.meta.env.BASE_URL}assets/characters/mara/walk.svg` : `${import.meta.env.BASE_URL}assets/characters/mara/idle.svg`}
           alt="Mara Quibble"
           style={{left:position.x,top:position.y,zIndex:depth.actorZ,transform:`translate(-50%,-100%) scale(${actorScale}) ${facing==='left'?'scaleX(-1)':''}`}}
         />
