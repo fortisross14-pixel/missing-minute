@@ -7,6 +7,7 @@ import { ITEMS, recipeFor } from '../game/items';
 import { currentObjective } from '../game/objectives';
 import { DIALOGUES, SCENES } from '../scenes';
 import ActionBar from '../ui/ActionBar';
+import StatusLine from '../ui/StatusLine';
 import InventoryBar from '../ui/InventoryBar';
 import DialoguePanel from '../ui/DialoguePanel';
 import { Ending, ItemPopup, Message, Thought } from '../ui/Overlays';
@@ -27,6 +28,8 @@ export default function App() {
   const [message,setMessage]=useState('');
   const [showLayers,setShowLayers]=useState(false);
   const [debugHotspots,setDebugHotspots]=useState(false);
+  const [hoveredHotspot,setHoveredHotspot]=useState(null);
+  const [hoveredInventory,setHoveredInventory]=useState(null);
   const scene=SCENES[state.sceneId];
   const [overrides,setOverrides]=useLayerOverrides(state.sceneId);
   const objective=useMemo(()=>currentObjective(state),[state]);
@@ -85,7 +88,7 @@ export default function App() {
   };
 
   const changeScene=(sceneId)=>{
-    setDialogue(null); setMessage(''); setThought(''); setShowLayers(false);
+    setDialogue(null); setMessage(''); setThought(''); setShowLayers(false); setHoveredHotspot(null); setHoveredInventory(null);
     setState((s)=>({...s,sceneId,selectedItem:null,verb:'walk'}));
   };
 
@@ -165,6 +168,7 @@ export default function App() {
         overrides={overrides}
         inputLocked={inputLocked}
         debugHotspots={debugHotspots}
+        onHotspotHover={setHoveredHotspot}
       />
       <Thought text={thought}/>
       <Message text={message} onClose={()=>setMessage('')}/>
@@ -173,8 +177,8 @@ export default function App() {
 
     <section className="game-controls">
       <ActionBar verb={state.verb} onChange={(verb)=>setState((s)=>({...s,verb,selectedItem:verb==='walk'||verb==='talk'||verb==='pickup'?null:s.selectedItem}))}/>
-      <div className="status-strip">{state.selectedItem?`${state.verb.toUpperCase()}: ${ITEMS[state.selectedItem]?.name}`:`${state.verb.toUpperCase()} — click a place or object`}</div>
-      <InventoryBar inventory={state.inventory} selected={state.selectedItem} onItemClick={inventoryClick} onItemDoubleClick={inventoryUse}/>
+      <StatusLine verb={state.verb} selectedItem={state.selectedItem} hoveredHotspot={hoveredHotspot} hoveredInventory={hoveredInventory}/>
+      <InventoryBar inventory={state.inventory} selected={state.selectedItem} onItemClick={inventoryClick} onItemDoubleClick={inventoryUse} onItemHover={setHoveredInventory}/>
     </section>
 
     <DialoguePanel dialogue={dialogue} onAdvance={advanceDialogue} onChoice={chooseDialogue} flags={state.flags}/>

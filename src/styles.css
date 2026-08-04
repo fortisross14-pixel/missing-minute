@@ -100,3 +100,40 @@ button{cursor:pointer}
   .dialogue-choices{grid-template-columns:1fr}.objective-ribbon{font-size:12px;top:8px;left:8px;max-width:90%}
 }
 @media(max-width:520px){.game-header h1{font-size:15px}.game-header p{font-size:11px}.scene-viewport{height:330px}.inventory-grid{grid-template-columns:repeat(4,1fr)}.action-bar{gap:2px;padding:4px}.game-frame{border-width:4px}.objective-ribbon{display:none}}
+
+/* v1.0.2 — restored painterly adventure presentation */
+:root{--ink:#160f0b;--deep:#0a1112;--wood:#3b281c;--brass:#c4924c;--paper:#ead7a7;--teal:#143536}
+body{background:radial-gradient(circle at 50% 0,#25302d 0,#101718 46%,#060909 100%);font-family:Georgia,'Palatino Linotype',serif}
+.game-shell{max-width:1600px;padding:8px 10px 16px}
+.game-header{min-height:46px;padding:6px 10px;border:3px solid #4a301d;outline:1px solid #c18d49;background:linear-gradient(180deg,#211811,#0c0c0a);box-shadow:inset 0 0 18px #000,0 5px 16px #0008}
+.game-header h1{font-size:18px;letter-spacing:.12em;color:#d8b36a;text-shadow:0 2px 0 #000;margin:0}.game-header p{font-size:12px;color:#ad9a75;margin:2px 0 0}
+.header-actions button{font-family:Georgia,serif;font-size:11px;border:1px solid #8c693c;background:linear-gradient(#4d3624,#211711);color:#e3cca0;padding:5px 8px}
+.game-frame{border:6px solid #2b1c13;outline:2px solid #b98745;border-radius:2px;box-shadow:0 0 0 2px #080706,0 15px 38px #000c;background:#050606}
+.scene-viewport{height:clamp(470px,55vw,760px);background:#070b0c}
+.scene-background{image-rendering:auto}
+.world-layer{image-rendering:auto}
+.player-actor{width:168px;filter:drop-shadow(0 8px 5px #000a);transition:left .7s linear,top .7s linear,transform .15s ease}
+.hotspot{cursor:pointer}
+.hotspot:focus-visible{outline:2px dashed #e9c369;outline-offset:-4px}
+.game-controls{margin-top:7px;border:5px solid #291b13;outline:2px solid #9f743e;border-radius:2px;background:#17110d;box-shadow:inset 0 0 22px #000,0 8px 25px #0009}
+.action-bar{gap:3px;padding:5px 6px;background:linear-gradient(#241a13,#0d0b09);border-bottom:1px solid #6d4c2b}
+.action-bar button{border:1px solid transparent;border-radius:3px;transition:transform .12s,filter .12s,opacity .12s}
+.action-bar button:hover{transform:translateY(-1px);filter:brightness(1.14)}
+.action-bar button.active{border-color:#f0cf7a;box-shadow:0 0 0 2px #5f371b,inset 0 0 14px #f3c65d33}
+.action-bar button.active img{outline:none}
+.status-strip{min-height:40px;display:flex;justify-content:center;align-items:center;gap:12px;padding:7px 14px;background:linear-gradient(90deg,#071718,#123334 48%,#071718);border-top:2px solid #a9783f;border-bottom:2px solid #a9783f;color:#efd590;text-shadow:0 2px 0 #000;font-size:16px;letter-spacing:.035em}
+.status-strip .status-verb{font-weight:bold}
+.status-strip.inventory-status{justify-content:flex-start;padding-left:22px}.status-strip.inventory-status strong{color:#f4d275;white-space:nowrap}.status-strip.inventory-status span{color:#d4c19b;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.inventory-panel{padding:8px 10px 13px;background:linear-gradient(90deg,#101b19,#213b35 45%,#101b19);box-shadow:inset 0 12px 28px #0007}
+.inventory-title{color:#d4aa5a;text-shadow:0 2px #000;font-size:13px;letter-spacing:.22em}
+.inventory-grid{grid-template-columns:repeat(9,minmax(76px,1fr));gap:6px}
+.inventory-slot{min-height:92px;border:2px solid #7b572e;border-radius:3px;background:radial-gradient(circle at 45% 35%,#50685a,#15231f 72%);color:#e8d5aa;box-shadow:inset 0 0 0 2px #0e1513,inset 0 0 18px #0009}
+.inventory-slot:hover{border-color:#c99a50;background:radial-gradient(circle at 45% 35%,#637b68,#1b2b25 72%)}
+.inventory-slot.selected{border-color:#f2ce72;box-shadow:inset 0 0 0 2px #392412,inset 0 0 18px #0009,0 0 8px #e6b95c88}
+.inventory-slot img{height:58px;filter:drop-shadow(0 5px 3px #000b)}
+.inventory-slot span{font-family:Georgia,serif;font-size:11px;color:#ecd8ad;text-shadow:0 1px #000}
+.objective-ribbon{background:#17110dec;border-color:#a67a40;color:#ead7ad;font-family:Georgia,serif}.objective-ribbon span{background:#6c261f}
+.dialogue-box{background:linear-gradient(#253832,#111b18);border-color:#593a23;outline-color:#c18e49;font-family:Georgia,serif}
+.dialogue-text{color:#f2dfb6}.dialogue-speaker{color:#e2b85d}
+.mara-thought,.message-toast{font-family:Georgia,serif}
+@media(max-width:850px){.scene-viewport{height:clamp(370px,69vw,590px)}.inventory-grid{grid-template-columns:repeat(5,1fr)}}

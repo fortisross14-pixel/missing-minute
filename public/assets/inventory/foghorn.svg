@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="140" height="100" viewBox="0 0 140 100">
-    <defs>
-      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
-      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
-      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
-      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
-      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
-      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
-    </defs><g filter="url(#shadow)"><path d="M12 55Q30 19 62 39Q85 21 104 45L96 82H34z" fill="#d4a94d" stroke="#49301f" stroke-width="6"/><path d="M92 47H112L135 22V82L112 61H92z" fill="url(#brass)" stroke="#4b2d1d" stroke-width="6"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><defs><filter id="s" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity=".75"/></filter><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2d681"/><stop offset=".5" stop-color="#a97431"/><stop offset="1" stop-color="#4e3216"/></linearGradient></defs><g filter="url(#s)"><path d="M23 32 H111 L83 66 H55Z" fill="url(#gold)" stroke="#4b2f14" stroke-width="7"/><path d="M70 66 H111 V84 H70Z" fill="#9a6b34" stroke="#4b2f14" stroke-width="6"/><path d="M111 72 C136 65 147 81 137 96 C126 111 105 96 111 72Z" fill="#b06b42" stroke="#4b2f14" stroke-width="6"/><path d="M133 91 q19 11 7 24" fill="none" stroke="#d1a06b" stroke-width="6"/></g></svg>

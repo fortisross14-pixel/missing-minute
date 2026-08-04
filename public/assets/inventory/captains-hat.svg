@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="140" height="100" viewBox="0 0 140 100">
-    <defs>
-      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
-      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
-      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
-      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
-      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
-      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
-    </defs><path d="M20 56Q70 18 120 56L112 78H28z" fill="#263f45" stroke="#2b1c17" stroke-width="7" filter="url(#shadow)"/><path d="M14 72H126" stroke="#d0a45e" stroke-width="11"/><path d="M48 50Q70 30 92 50" fill="none" stroke="#efe0b7" stroke-width="5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><defs><filter id="s" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000" flood-opacity=".75"/></filter><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2d681"/><stop offset=".5" stop-color="#a97431"/><stop offset="1" stop-color="#4e3216"/></linearGradient></defs><g filter="url(#s)"><path d="M38 66 Q42 27 80 24 Q118 27 122 66Z" fill="#273139" stroke="#151619" stroke-width="7"/><path d="M22 72 Q80 58 138 72 Q119 91 80 91 Q41 91 22 72Z" fill="#1b2228" stroke="#151619" stroke-width="7"/><path d="M64 39 H96" stroke="#d2af63" stroke-width="6"/><circle cx="80" cy="39" r="7" fill="#d2af63"/></g></svg>

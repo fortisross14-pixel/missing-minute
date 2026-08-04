@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { applyOverrides } from './LayerEditor';
 import { clamp, clampToPolygons, perspectiveScale, resolveDepth } from './geometry';
+import { assetUrl } from '../game/assetUrl';
 
 function visible(entity,flags) {
   if (entity.hidden) return false;
@@ -16,7 +17,7 @@ function SceneLayer({layer,flags}) {
   return <img className={`world-layer ${layer.className||''}`} style={style} src={layer.asset} alt="" draggable="false"/>;
 }
 
-export default function SceneRenderer({scene,flags,position,onPosition,onHotspot,overrides,inputLocked,debugHotspots}) {
+export default function SceneRenderer({scene,flags,position,onPosition,onHotspot,onHotspotHover,overrides,inputLocked,debugHotspots}) {
   const viewportRef=useRef(null);
   const [metrics,setMetrics]=useState({width:1200,height:675,scale:.75});
   const [cameraX,setCameraX]=useState(scene.camera.startX||0);
@@ -33,6 +34,11 @@ export default function SceneRenderer({scene,flags,position,onPosition,onHotspot
     measure();
     const observer=new ResizeObserver(measure); if(viewportRef.current) observer.observe(viewportRef.current);
     return ()=>observer.disconnect();
+  },[scene.id]);
+
+  useEffect(()=>{
+    setCameraX(scene.camera.startX||0);
+    onHotspotHover?.(null);
   },[scene.id]);
 
   useEffect(()=>()=>clearTimeout(timer.current),[]);
@@ -60,6 +66,7 @@ export default function SceneRenderer({scene,flags,position,onPosition,onHotspot
 
   const clickStage=(event)=>{
     if(inputLocked) return;
+    onHotspotHover?.(null);
     const rect=viewportRef.current.getBoundingClientRect();
     const x=(event.clientX-rect.left)/metrics.scale+cameraX;
     const y=(event.clientY-rect.top)/metrics.scale;
@@ -69,24 +76,33 @@ export default function SceneRenderer({scene,flags,position,onPosition,onHotspot
   const layers=useMemo(()=>scene.layers.map((l)=>applyOverrides(l,overrides)).sort((a,b)=>a.z-b.z),[scene,overrides]);
   const depth=resolveDepth(scene,position);
   const actorScale=perspectiveScale(scene,position.y);
+  const maraAsset=assetUrl(`assets/characters/mara/${moving?'walk.png':'idle.png'}`);
 
   return <div className="scene-viewport" ref={viewportRef}>
     <div className="scene-camera" style={{transform:`translate3d(${-cameraX*metrics.scale}px,0,0)`}}>
       <div className="scene-world" style={{width:scene.world.width,height:scene.world.height,transform:`scale(${metrics.scale})`}} onClick={clickStage}>
         <img className="scene-background" src={scene.background} alt={scene.name}/>
-        {layers.map((layer)=><SceneLayer key={layer.id} layer={layer} flags={flags}/>)}
+        {layers.map((layer)=><SceneLayer key={layer.id} layer={layer} flags={flags}/>) }
         <img
           className={`player-actor ${moving?'is-walking':'is-idle'} facing-${facing}`}
-          src={moving ? `${import.meta.env.BASE_URL}assets/characters/mara/walk.svg` : `${import.meta.env.BASE_URL}assets/characters/mara/idle.svg`}
+          src={maraAsset}
           alt="Mara Quibble"
           style={{left:position.x,top:position.y,zIndex:depth.actorZ,transform:`translate(-50%,-100%) scale(${actorScale}) ${facing==='left'?'scaleX(-1)':''}`}}
         />
         {scene.hotspots.filter((h)=>visible(h,flags)).map((hotspot)=><button
           key={hotspot.id}
+          type="button"
           className={`hotspot ${debugHotspots?'debug':''}`}
           style={{left:hotspot.x,top:hotspot.y,width:hotspot.w,height:hotspot.h,zIndex:90}}
           aria-label={hotspot.label}
-          onClick={(event)=>{event.stopPropagation();moveTo(hotspot.walk||{x:hotspot.x,y:hotspot.y},()=>onHotspot(hotspot));}}
+          onMouseEnter={()=>onHotspotHover?.(hotspot)}
+          onMouseLeave={()=>onHotspotHover?.(null)}
+          onFocus={()=>onHotspotHover?.(hotspot)}
+          onBlur={()=>onHotspotHover?.(null)}
+          onClick={(event)=>{
+            event.stopPropagation();
+            moveTo(hotspot.walk||{x:hotspot.x,y:hotspot.y},()=>onHotspot(hotspot));
+          }}
         ><span>{hotspot.label}</span></button>)}
       </div>
     </div>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 420">
+<defs>
+ <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#725035"/><stop offset=".48" stop-color="#3f2b21"/><stop offset="1" stop-color="#211712"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d5a65d"/><stop offset=".45" stop-color="#795128"/><stop offset="1" stop-color="#2b2119"/></linearGradient>
+ <radialGradient id="glass"><stop stop-color="#9fc6c0" stop-opacity=".5"/><stop offset="1" stop-color="#172b2d" stop-opacity=".9"/></radialGradient>
+ <filter id="rough"><feTurbulence baseFrequency=".015" numOctaves="3" seed="12" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/></filter>
+ <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity=".65"/></filter>
+</defs>
+<g filter="url(#shadow)">
+ <path d="M68 12h224l22 26v345l-24 25H68l-24-24V39z" fill="url(#wood)" stroke="#1a120e" stroke-width="12"/>
+ <path d="M82 35h196l13 16v310l-15 18H82l-14-16V52z" fill="#273735" stroke="#b2854a" stroke-width="6" filter="url(#rough)"/>
+ <path d="M145 0h70v85h-70z" fill="url(#metal)" stroke="#241911" stroke-width="8"/>
+ <path d="M161 0v67h38V0" fill="#34241a" opacity=".7"/>
+ <rect x="94" y="93" width="172" height="52" rx="6" fill="#cbb987" stroke="#49311d" stroke-width="6"/>
+ <text x="180" y="119" text-anchor="middle" font-family="Georgia,serif" font-weight="bold" font-size="19" fill="#2b2119">MUNICIPAL</text>
+ <text x="180" y="139" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#2b2119">PNEUMATIC DELIVERY</text>
+ <rect x="91" y="163" width="178" height="133" rx="8" fill="url(#glass)" stroke="#b58a4d" stroke-width="7"/>
+ <path d="M105 181h150M105 279h150" stroke="#d4b570" stroke-width="4" opacity=".45"/>
+ <rect x="113" y="318" width="134" height="23" rx="4" fill="#0d1717" stroke="#a8793f" stroke-width="5"/>
+ <circle cx="104" cy="365" r="14" fill="#9b2d24" stroke="#e0b56c" stroke-width="5"/>
+ <circle cx="256" cy="365" r="14" fill="#2d6c5d" stroke="#e0b56c" stroke-width="5"/>
+ <text x="180" y="393" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#e5cca0">PLEASE WAIT IN CHRONOLOGICAL ORDER</text>
+</g>
+</svg>

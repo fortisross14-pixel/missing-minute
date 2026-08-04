@@ -1,55 +1,48 @@
-const A = `${import.meta.env.BASE_URL}assets/`;
+import { assetUrl } from '../../game/assetUrl.js';
+const A = 'assets/';
+
 export const harborScene = {
   id:'02-gannets-end-harbor',
   name:'Gannet’s End Harbor',
-  world:{width:2900,height:900},
-  start:{x:240,y:735},
-  camera:{startX:0,deadZoneLeft:.32,deadZoneRight:.64},
-  perspective:{nearY:455,farY:825,nearScale:.7,farScale:1.04},
+  world:{width:2196,height:900},
+  start:{x:420,y:770},
+  camera:{startX:0,deadZoneLeft:.32,deadZoneRight:.67},
+  perspective:{nearY:500,farY:850,nearScale:.72,farScale:1.04},
   walkPolygons:[
-    [[100,610],[2750,610],[2860,830],[40,830]],
-    [[420,530],[1900,530],[2050,655],[340,655]]
+    [[110,585],[2040,585],[2160,850],[35,850]],
+    [[400,515],[1450,515],[1580,650],[330,650]]
   ],
   depthZones:[
-    {id:'rear',actorZ:20,polygon:[[60,480],[2820,480],[2750,625],[120,625]]},
-    {id:'middle',actorZ:40,polygon:[[70,625],[2820,625],[2820,730],[70,730]]},
-    {id:'front',actorZ:60,polygon:[[30,730],[2870,730],[2890,860],[10,860]]}
+    {id:'rear',actorZ:20,polygon:[[70,470],[2110,470],[2050,620],[120,620]]},
+    {id:'middle',actorZ:40,polygon:[[60,620],[2130,620],[2140,740],[50,740]]},
+    {id:'front',actorZ:60,polygon:[[30,740],[2160,740],[2180,880],[10,880]]}
   ],
-  background:A + 'scenes/02-gannets-end-harbor/background.svg',
+  background:assetUrl(`${A}scenes/02-gannets-end-harbor/background.png`),
   layers:[
-    {id:'rear-harbor-details',asset:A + 'scenes/02-gannets-end-harbor/layers/rear-harbor-details.svg',x:0,y:0,w:2900,h:900,z:5,locked:true},
-    {id:'water-animation',kind:'effect',x:0,y:0,w:2900,h:900,z:7,className:'water-shimmer',locked:true},
-    {id:'boat-back',asset:A + 'scenes/02-gannets-end-harbor/layers/boat-back.svg',x:1480,y:320,w:760,h:430,z:17,className:'boat-rock'},
-    {id:'gull-with-hat',asset:A + 'characters/mechanical-gull/with-hat.svg',x:1120,y:230,w:210,h:190,z:22,className:'gull-idle',hiddenWhen:'gullLured'},
-    {id:'gull-bucket',asset:A + 'characters/mechanical-gull/in-bucket.svg',x:1135,y:610,w:170,h:150,z:32,className:'bucket-rattle',visibleWhen:'gullLured',hiddenWhen:'harborComplete'},
-    {id:'hat-on-dock',asset:A + 'scenes/02-gannets-end-harbor/props/captains-hat.svg',x:1250,y:650,w:150,h:90,z:34,visibleWhen:'gullLured',hiddenWhen:'hatTaken'},
-    {id:'captain-nib',asset:A + 'characters/nib/idle.svg',x:1910,y:360,w:250,h:390,z:26,className:'npc-breathe'},
-    {id:'fish-stall-back',asset:A + 'scenes/02-gannets-end-harbor/layers/fish-stall-back.svg',x:2270,y:285,w:570,h:490,z:19},
-    {id:'madame-brine',asset:A + 'characters/brine/idle.svg',x:2430,y:370,w:245,h:370,z:27,className:'npc-breathe'},
-    {id:'swordfish-sign-normal',asset:A + 'scenes/02-gannets-end-harbor/props/swordfish-sign.svg',x:2310,y:220,w:380,h:170,z:23,hiddenWhen:'photoShown'},
-    {id:'swordfish-sign-caught',asset:A + 'scenes/02-gannets-end-harbor/props/swordfish-sign-caught.svg',x:2370,y:410,w:350,h:210,z:28,visibleWhen:'photoShown'},
-    {id:'bucket',asset:A + 'scenes/02-gannets-end-harbor/props/bucket.svg',x:1135,y:640,w:150,h:130,z:31,hiddenWhen:'gullLured'},
-    {id:'pump-with-funnel',asset:A + 'scenes/02-gannets-end-harbor/props/pump-with-funnel.svg',x:1670,y:600,w:210,h:180,z:31,hiddenWhen:'funnelTaken'},
-    {id:'pump-empty',asset:A + 'scenes/02-gannets-end-harbor/props/pump-empty.svg',x:1670,y:600,w:210,h:180,z:31,visibleWhen:'funnelTaken'},
-    {id:'fish-stall-counter',asset:A + 'scenes/02-gannets-end-harbor/layers/fish-stall-counter.svg',x:2250,y:590,w:620,h:250,z:43},
-    {id:'boat-front',asset:A + 'scenes/02-gannets-end-harbor/layers/boat-front.svg',x:1480,y:320,w:760,h:430,z:45,className:'boat-rock'},
-    {id:'dock-posts',asset:A + 'scenes/02-gannets-end-harbor/layers/dock-posts.svg',x:850,y:520,w:620,h:310,z:48},
-    {id:'foreground-crates-left',asset:A + 'scenes/02-gannets-end-harbor/layers/foreground-crates-left.svg',x:0,y:650,w:650,h:250,z:70},
-    {id:'foreground-nets-right',asset:A + 'scenes/02-gannets-end-harbor/layers/foreground-nets-right.svg',x:2460,y:630,w:440,h:270,z:70},
-    {id:'rain',kind:'effect',x:0,y:0,w:2900,h:900,z:75,className:'rain-effect'},
-    {id:'fog',kind:'effect',x:0,y:0,w:2900,h:900,z:76,className:'fog-effect'}
+    {id:'water-animation',kind:'effect',x:0,y:0,w:2196,h:900,z:7,className:'water-shimmer',locked:true},
+    {id:'gull-with-hat',asset:assetUrl(`${A}characters/mechanical-gull/with-hat.png`),x:515,y:115,w:170,h:165,z:22,className:'gull-idle',hiddenWhen:'gullLured'},
+    {id:'gull-bucket',asset:assetUrl(`${A}characters/mechanical-gull/in-bucket.png`),x:620,y:585,w:130,h:125,z:32,className:'bucket-rattle',visibleWhen:'gullLured',hiddenWhen:'harborComplete'},
+    {id:'hat-on-dock',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/props/captains-hat.svg`),x:720,y:640,w:120,h:72,z:34,visibleWhen:'gullLured',hiddenWhen:'hatTaken'},
+    {id:'bucket',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/props/bucket.svg`),x:610,y:625,w:135,h:115,z:31,hiddenWhen:'gullLured'},
+    {id:'pump-with-funnel',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/props/pump-with-funnel.svg`),x:1020,y:610,w:175,h:150,z:31,hiddenWhen:'funnelTaken'},
+    {id:'pump-empty',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/props/pump-empty.svg`),x:1020,y:610,w:175,h:150,z:31,visibleWhen:'funnelTaken'},
+    {id:'harbor-occlusion',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/layers/harbor-occlusion.png`),x:0,y:0,w:2196,h:900,z:48},
+    {id:'foreground-crates-left',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/layers/foreground-crates-left.png`),x:0,y:600,w:520,h:300,z:70},
+    {id:'foreground-nets-right',asset:assetUrl(`${A}scenes/02-gannets-end-harbor/layers/foreground-nets-right.png`),x:1810,y:595,w:386,h:305,z:70},
+    {id:'rain',kind:'effect',x:0,y:0,w:2196,h:900,z:75,className:'rain-effect'},
+    {id:'fog',kind:'effect',x:0,y:0,w:2196,h:900,z:76,className:'fog-effect'}
   ],
   hotspots:[
-    {id:'tavern',label:'The Rusty Kettle',x:40,y:260,w:520,h:430,walk:{x:440,y:690}},
-    {id:'lighthouse',label:'abandoned lighthouse',x:760,y:110,w:160,h:350,walk:{x:780,y:610}},
-    {id:'gull',label:'mechanical gull',x:1080,y:190,w:280,h:270,walk:{x:1220,y:650},hiddenWhen:'gullLured'},
-    {id:'bucket',label:'empty fish bucket',x:1090,y:610,w:230,h:190,walk:{x:1200,y:735},hiddenWhen:'gullLured'},
-    {id:'hat',label:'ceremonial captain’s hat',x:1210,y:620,w:230,h:160,walk:{x:1320,y:740},visibleWhen:'gullLured',hiddenWhen:'hatTaken'},
-    {id:'pump',label:'broken bilge pump',x:1630,y:570,w:280,h:240,walk:{x:1750,y:735}},
-    {id:'boat',label:'The Misty Minnow',x:1450,y:300,w:820,h:500,walk:{x:2050,y:690}},
-    {id:'captain',label:'Captain Nib',x:1870,y:330,w:330,h:450,walk:{x:1840,y:735}},
-    {id:'brine',label:'Madame Brine',x:2380,y:335,w:330,h:430,walk:{x:2300,y:740}},
-    {id:'fish',label:'luxury sardines',x:2300,y:630,w:500,h:170,walk:{x:2290,y:750}},
-    {id:'sign',label:'hanging swordfish sign',x:2260,y:190,w:500,h:260,walk:{x:2380,y:640}}
+    {id:'tavern',label:'The Rusty Kettle',x:0,y:230,w:430,h:430,walk:{x:380,y:700}},
+    {id:'lighthouse',label:'abandoned lighthouse',x:670,y:155,w:150,h:300,walk:{x:760,y:610}},
+    {id:'gull',label:'mechanical gull',x:485,y:80,w:245,h:230,walk:{x:650,y:650},hiddenWhen:'gullLured'},
+    {id:'bucket',label:'empty fish bucket',x:575,y:590,w:220,h:175,walk:{x:680,y:760},hiddenWhen:'gullLured'},
+    {id:'hat',label:'ceremonial captain’s hat',x:690,y:610,w:190,h:145,walk:{x:790,y:770},visibleWhen:'gullLured',hiddenWhen:'hatTaken'},
+    {id:'pump',label:'broken bilge pump',x:985,y:575,w:260,h:220,walk:{x:1100,y:770}},
+    {id:'boat',label:'The Misty Minnow',x:780,y:120,w:590,h:570,walk:{x:1250,y:700}},
+    {id:'captain',label:'Captain Nib',x:1160,y:270,w:360,h:510,walk:{x:1125,y:780}},
+    {id:'brine',label:'Madame Brine',x:1670,y:270,w:360,h:430,walk:{x:1600,y:770}},
+    {id:'fish',label:'luxury sardines',x:1580,y:530,w:570,h:245,walk:{x:1540,y:790}},
+    {id:'sign',label:'hanging swordfish sign',x:1630,y:20,w:535,h:300,walk:{x:1720,y:665}}
   ]
 };
