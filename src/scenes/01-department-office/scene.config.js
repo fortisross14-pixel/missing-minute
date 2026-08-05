@@ -5,41 +5,42 @@ export const officeScene = {
   id:'01-department-office',
   name:'Department of Lost Causes',
   world:{width:4096,height:1152},
-  start:{x:1770,y:1020},
+  start:{x:1700,y:1020},
   camera:{startX:420,deadZoneLeft:.35,deadZoneRight:.62},
-  perspective:{nearY:690,farY:1095,nearScale:.78,farScale:1.04},
+  perspective:{nearY:700,farY:1095,nearScale:.82,farScale:1.08},
   walkPolygons:[
     [[70,760],[4020,760],[4060,1140],[40,1140]],
-    [[820,660],[2990,660],[3160,815],[700,815]]
+    [[780,660],[3020,660],[3170,820],[700,820]]
   ],
   depthZones:[
     {id:'rear',actorZ:20,polygon:[[60,660],[4040,660],[4010,820],[90,820]]},
-    {id:'middle',actorZ:40,polygon:[[40,820],[4050,820],[4050,960],[40,960]]},
-    {id:'front',actorZ:60,polygon:[[30,960],[4060,960],[4060,1148],[30,1148]]}
+    {id:'middle',actorZ:40,polygon:[[40,820],[4050,820],[4050,970],[40,970]]},
+    {id:'front',actorZ:60,polygon:[[30,970],[4060,970],[4060,1148],[30,1148]]}
   ],
-  background:asset('assets/scenes/01-department-office/background-calibration.png'),
+  background:asset('assets/scenes/01-department-office/background-cleanwide.png'),
   layers:[
-    {id:'pindle',asset:asset('assets/characters/pindle/idle.svg'),x:180,y:300,w:560,h:390,z:24,className:'npc-breathe'},
-    {id:'terminal',asset:asset('assets/scenes/01-department-office/props/pneumatic-terminal-calibration.png'),x:1380,y:320,w:360,h:470,z:26},
-    {id:'fishbowl',asset:asset('assets/scenes/01-department-office/props/fishbowl-calibration.png'),x:2520,y:540,w:420,h:420,z:34},
-    {id:'handle-in-bowl',asset:asset('assets/scenes/01-department-office/props/handle-in-bowl-calibration.png'),x:2668,y:675,w:118,h:118,z:35,hiddenWhen:'handleTaken'},
-    {id:'lost-shelf',asset:asset('assets/scenes/01-department-office/props/lost-shelf-calibration.png'),x:3150,y:350,w:820,h:690,z:30},
-    {id:'gus-on-rack',asset:asset('assets/characters/gus/hanging.svg'),x:3730,y:560,w:82,h:212,z:31,hiddenWhen:'packageOpened',className:'umbrella-sway'},
-    {id:'alarm-broken',asset:asset('assets/scenes/01-department-office/props/alarm-broken-calibration.png'),x:2805,y:265,w:160,h:215,z:18,hiddenWhen:'alarmRepaired'},
-    {id:'alarm-repaired',asset:asset('assets/scenes/01-department-office/props/alarm-repaired.svg'),x:2840,y:280,w:92,h:140,z:18,visibleWhen:'alarmRepaired'}
+    {id:'clock-normal',asset:asset('assets/scenes/01-department-office/props/clock-normal.svg'),x:2050,y:58,w:270,h:270,z:10,hiddenWhen:'drillTriggered'},
+    {id:'clock-tomorrow',asset:asset('assets/scenes/01-department-office/props/clock-tomorrow.svg'),x:2050,y:58,w:270,h:270,z:10,visibleWhen:'drillTriggered'},
+    {id:'calendar-today',asset:asset('assets/scenes/01-department-office/props/calendar-today.svg'),x:3050,y:120,w:150,h:190,z:10,hiddenWhen:'drillTriggered'},
+    {id:'calendar-tomorrow',asset:asset('assets/scenes/01-department-office/props/calendar-tomorrow.svg'),x:3050,y:120,w:150,h:190,z:10,visibleWhen:'drillTriggered'},
+    {id:'pindle',asset:asset('assets/characters/pindle/idle.svg'),x:55,y:420,w:520,h:320,z:24,className:'npc-breathe'},
+    {id:'terminal',asset:asset('assets/scenes/01-department-office/props/pneumatic-terminal-clean.png'),x:1040,y:335,w:300,h:455,z:26},
+    {id:'fishbowl',asset:asset('assets/scenes/01-department-office/props/fishbowl-pedestal-clean.png'),x:2470,y:505,w:430,h:540,z:34},
+    {id:'lost-shelf',asset:asset('assets/scenes/01-department-office/props/lost-property-shelf-clean.png'),x:3290,y:308,w:690,h:860,z:30},
+    {id:'alarm-broken',asset:asset('assets/scenes/01-department-office/props/alarm-broken-clean.png'),x:2875,y:210,w:145,h:220,z:18,hiddenWhen:'alarmRepaired'},
+    {id:'alarm-repaired',asset:asset('assets/scenes/01-department-office/props/alarm-repaired.svg'),x:2890,y:220,w:110,h:165,z:18,visibleWhen:'alarmRepaired'}
   ],
   hotspots:[
-    {id:'pindle',label:'Mr. Pindle',x:140,y:280,w:620,h:410,walk:{x:900,y:910}},
-    {id:'terminal',label:'pneumatic delivery terminal',x:1360,y:300,w:390,h:500,walk:{x:1560,y:910}},
-    {id:'poster',label:'emergency continuity procedure',x:1465,y:132,w:230,h:190,walk:{x:1640,y:780}},
-    {id:'clock',label:'official municipal clock',x:2035,y:52,w:370,h:235,walk:{x:2250,y:810}},
-    {id:'alarm',label:'fire alarm',x:2790,y:245,w:195,h:245,walk:{x:2870,y:900}},
-    {id:'rulers',label:'matched ruler pair',x:90,y:905,w:420,h:110,walk:{x:710,y:995},hiddenWhen:'rulersTaken'},
-    {id:'fishbowl',label:'Mr. Ledger’s fishbowl',x:2495,y:525,w:450,h:450,walk:{x:2680,y:1000}},
-    {id:'shelf',label:'lost-property shelf',x:3140,y:340,w:830,h:690,walk:{x:3340,y:1000}},
-    {id:'gus',label:'judgmental umbrella',x:3720,y:540,w:120,h:260,walk:{x:3550,y:1000},visibleWhen:'packageOpened'},
-    {id:'map-exit',label:'route to Gannet’s End Harbor',x:2920,y:70,w:560,h:420,walk:{x:3180,y:900},visibleWhen:'officeComplete'},
-    {id:'forms',label:'complaint form stack',x:40,y:800,w:360,h:200,walk:{x:630,y:1000}},
-    {id:'desk',label:'Mara’s desk',x:30,y:765,w:780,h:270,walk:{x:900,y:1005}}
+    {id:'pindle',label:'Mr. Pindle',x:40,y:350,w:620,h:390,walk:{x:760,y:920}},
+    {id:'terminal',label:'pneumatic delivery terminal',x:1020,y:325,w:330,h:470,walk:{x:1220,y:920}},
+    {id:'poster',label:'emergency continuity procedure',x:1110,y:140,w:220,h:180,walk:{x:1240,y:795}},
+    {id:'clock',label:'official municipal clock',x:2030,y:55,w:290,h:275,walk:{x:2190,y:840}},
+    {id:'alarm',label:'fire alarm',x:2865,y:200,w:165,h:235,walk:{x:2900,y:920}},
+    {id:'rulers',label:'matched ruler pair',x:70,y:905,w:430,h:120,walk:{x:690,y:1000},hiddenWhen:'rulersTaken'},
+    {id:'fishbowl',label:'Mr. Ledger’s fishbowl',x:2480,y:505,w:420,h:545,walk:{x:2670,y:1005}},
+    {id:'shelf',label:'lost-property shelf',x:3290,y:300,w:700,h:865,walk:{x:3480,y:1005}},
+    {id:'map-exit',label:'route to Gannet’s End Harbor',x:3020,y:50,w:640,h:460,walk:{x:3170,y:915},visibleWhen:'officeComplete'},
+    {id:'forms',label:'complaint form stack',x:35,y:795,w:360,h:215,walk:{x:610,y:1000}},
+    {id:'desk',label:'Mara’s desk',x:25,y:770,w:760,h:280,walk:{x:860,y:1005}}
   ]
 };
