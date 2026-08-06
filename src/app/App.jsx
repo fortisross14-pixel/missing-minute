@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import SceneRenderer from '../engine/SceneRenderer';
-import LayerEditor, { useLayerOverrides } from '../engine/LayerEditor';
-import { initialState, loadState, saveState } from '../engine/state';
+import LayerEditor, { useSceneOverrides } from '../engine/LayerEditor';
+import { initialState, loadState, saveState, SAVE_KEY } from '../engine/state';
 import { sounds } from '../engine/audio';
 import { ITEMS, recipeFor } from '../game/items';
 import { currentObjective } from '../game/objectives';
@@ -26,12 +26,14 @@ export default function App() {
   const [popup,setPopup]=useState(null);
   const [thought,setThought]=useState('');
   const [message,setMessage]=useState('');
-  const [showLayers,setShowLayers]=useState(false);
+  const [showComposer,setShowComposer]=useState(false);
+  const [composerSelection,setComposerSelection]=useState(null);
+  const [linkHotspot,setLinkHotspot]=useState(true);
   const [debugHotspots,setDebugHotspots]=useState(false);
   const [hoveredHotspot,setHoveredHotspot]=useState(null);
   const [hoveredInventory,setHoveredInventory]=useState(null);
   const scene=SCENES[state.sceneId];
-  const [overrides,setOverrides]=useLayerOverrides(state.sceneId);
+  const [overrides,setOverrides]=useSceneOverrides(state.sceneId);
   const objective=useMemo(()=>currentObjective(state),[state]);
   const inputLocked=Boolean(dialogue||popup);
 
@@ -88,7 +90,7 @@ export default function App() {
   };
 
   const changeScene=(sceneId)=>{
-    setDialogue(null); setMessage(''); setThought(''); setShowLayers(false); setHoveredHotspot(null); setHoveredInventory(null);
+    setDialogue(null); setMessage(''); setThought(''); setHoveredHotspot(null); setHoveredInventory(null);
     setState((s)=>({...s,sceneId,selectedItem:null,verb:'walk'}));
   };
 
@@ -142,7 +144,7 @@ export default function App() {
   };
 
   const closePopup=()=>setPopup((p)=>p.index<p.items.length-1?{...p,index:p.index+1}:null);
-  const reset=()=>{localStorage.clear();setState(structuredClone(initialState));setDialogue(null);setPopup(null);setThought('');setMessage('');};
+  const reset=()=>{localStorage.removeItem(SAVE_KEY);setState(structuredClone(initialState));setDialogue(null);setPopup(null);setThought('');setMessage('');};
 
   if(state.sceneId==='ending') return <Ending/>;
   const position=state.positions[state.sceneId]||scene.start;
@@ -151,7 +153,7 @@ export default function App() {
     <header className="game-header">
       <div><h1>Mara Quibble and the Missing Minute</h1><p>{scene.name}</p></div>
       <div className="header-actions">
-        <button onClick={()=>setShowLayers((x)=>!x)}>Layers</button>
+        <button onClick={()=>setShowComposer((x)=>!x)}>{showComposer?'Close composer':'Scene composer'}</button>
         <button onClick={()=>setDebugHotspots((x)=>!x)}>{debugHotspots?'Hide':'Show'} hotspots</button>
         <button onClick={()=>setState((s)=>({...s,mute:!s.mute}))}>{state.mute?'Sound off':'Sound on'}</button>
         <button onClick={reset}>Restart</button>
@@ -166,7 +168,9 @@ export default function App() {
         onPosition={(next)=>setState((s)=>({...s,positions:{...s.positions,[s.sceneId]:next}}))}
         onHotspot={interact}
         overrides={overrides}
-        inputLocked={inputLocked}
+        setOverrides={setOverrides}
+        composer={{active:showComposer,selection:composerSelection,setSelection:setComposerSelection,linkHotspot}}
+        inputLocked={inputLocked || showComposer}
         debugHotspots={debugHotspots}
         onHotspotHover={setHoveredHotspot}
       />
@@ -183,6 +187,6 @@ export default function App() {
 
     <DialoguePanel dialogue={dialogue} onAdvance={advanceDialogue} onChoice={chooseDialogue} flags={state.flags}/>
     <ItemPopup popup={popup} onClose={closePopup}/>
-    {showLayers&&<LayerEditor scene={scene} overrides={overrides} setOverrides={setOverrides} onClose={()=>setShowLayers(false)}/>} 
+    {showComposer&&<LayerEditor scene={scene} overrides={overrides} setOverrides={setOverrides} selection={composerSelection} setSelection={setComposerSelection} linkHotspot={linkHotspot} setLinkHotspot={setLinkHotspot} onSceneChange={changeScene} onClose={()=>setShowComposer(false)}/>} 
   </main>;
 }

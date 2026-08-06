@@ -3,8 +3,8 @@ export const SAVE_KEY = 'mara-quibble-v1';
 export const initialState = {
   sceneId: '01-department-office',
   positions: {
-    '01-department-office': { x: 780, y: 735 },
-    '02-gannets-end-harbor': { x: 260, y: 735 }
+    '01-department-office': { x: 1710, y: 1020 },
+    '02-gannets-end-harbor': { x: 340, y: 860 }
   },
   inventory: ['employee-id', 'peppermint', 'complaint-form-bound'],
   selectedItem: null,

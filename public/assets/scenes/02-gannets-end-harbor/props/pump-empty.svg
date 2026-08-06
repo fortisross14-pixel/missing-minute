@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="210" height="180" viewBox="0 0 210 180">
-    <defs>
-      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
-      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
-      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
-      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
-      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
-      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
-    </defs>
-<g filter="url(#shadow)" stroke="#2b1b15" stroke-linejoin="round"><rect x="38" y="65" width="126" height="105" rx="8" fill="#435b55" stroke-width="8"/><circle cx="101" cy="116" r="38" fill="#263d3a" stroke="#c08d4d" stroke-width="7"/><path d="M60 70V30H145V70" fill="none" stroke="#71543b" stroke-width="13"/><path d="M145 35L180 54" stroke="#71543b" stroke-width="13"/></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="170" viewBox="0 0 210 170"><title>Empty pump placeholder</title><rect width="210" height="170" fill="none"/><rect x="20" y="70" width="155" height="85" rx="15" fill="#52676b" stroke="#273236" stroke-width="10"/><circle cx="65" cy="112" r="28" fill="#263b3f"/><path d="M175 95H205V145H175" fill="#52676b" stroke="#273236" stroke-width="10"/><text x="100" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#f5e7bf">PUMP</text></svg>

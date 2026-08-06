@@ -1,46 +1,63 @@
-const BASE_URL = import.meta.env?.BASE_URL ?? '/';
-const asset = (p) => `${BASE_URL}${String(p).replace(/^\/+/, '')}`;
+import { assetUrl } from '../../game/assetUrl.js';
+const A = 'assets/';
 
 export const officeScene = {
-  id:'01-department-office',
-  name:'Department of Lost Causes',
-  world:{width:4096,height:1152},
-  start:{x:1700,y:1020},
-  camera:{startX:420,deadZoneLeft:.35,deadZoneRight:.62},
-  perspective:{nearY:700,farY:1095,nearScale:.82,farScale:1.08},
-  walkPolygons:[
-    [[70,760],[4020,760],[4060,1140],[40,1140]],
-    [[780,660],[3020,660],[3170,820],[700,820]]
+  id: '01-department-office',
+  name: 'Department of Lost Causes',
+  world: { width: 4096, height: 1152 },
+  start: { x: 1710, y: 1020 },
+  actor: {
+    asset: assetUrl(`${A}characters/mara/idle.svg`),
+    walkAsset: assetUrl(`${A}characters/mara/walk.svg`),
+    width: 210
+  },
+  camera: { startX: 420, deadZoneLeft: .35, deadZoneRight: .62 },
+  perspective: { nearY: 690, farY: 1100, nearScale: .78, farScale: 1.08 },
+  walkPolygons: [
+    [[80, 760], [4010, 760], [4060, 1135], [35, 1135]],
+    [[760, 665], [3160, 665], [3290, 825], [690, 825]]
   ],
-  depthZones:[
-    {id:'rear',actorZ:20,polygon:[[60,660],[4040,660],[4010,820],[90,820]]},
-    {id:'middle',actorZ:40,polygon:[[40,820],[4050,820],[4050,970],[40,970]]},
-    {id:'front',actorZ:60,polygon:[[30,970],[4060,970],[4060,1148],[30,1148]]}
+  depthZones: [
+    { id: 'rear', actorZ: 20, polygon: [[55, 660], [4040, 660], [4010, 830], [90, 830]] },
+    { id: 'middle', actorZ: 40, polygon: [[40, 825], [4050, 825], [4050, 975], [40, 975]] },
+    { id: 'front', actorZ: 60, polygon: [[25, 970], [4065, 970], [4065, 1148], [25, 1148]] }
   ],
-  background:asset('assets/scenes/01-department-office/background-cleanwide.png'),
-  layers:[
-    {id:'clock-normal',asset:asset('assets/scenes/01-department-office/props/clock-normal.svg'),x:2050,y:58,w:270,h:270,z:10,hiddenWhen:'drillTriggered'},
-    {id:'clock-tomorrow',asset:asset('assets/scenes/01-department-office/props/clock-tomorrow.svg'),x:2050,y:58,w:270,h:270,z:10,visibleWhen:'drillTriggered'},
-    {id:'calendar-today',asset:asset('assets/scenes/01-department-office/props/calendar-today.svg'),x:3050,y:120,w:150,h:190,z:10,hiddenWhen:'drillTriggered'},
-    {id:'calendar-tomorrow',asset:asset('assets/scenes/01-department-office/props/calendar-tomorrow.svg'),x:3050,y:120,w:150,h:190,z:10,visibleWhen:'drillTriggered'},
-    {id:'pindle',asset:asset('assets/characters/pindle/idle.svg'),x:55,y:420,w:520,h:320,z:24,className:'npc-breathe'},
-    {id:'terminal',asset:asset('assets/scenes/01-department-office/props/pneumatic-terminal-clean.png'),x:1040,y:335,w:300,h:455,z:26},
-    {id:'fishbowl',asset:asset('assets/scenes/01-department-office/props/fishbowl-pedestal-clean.png'),x:2470,y:505,w:430,h:540,z:34},
-    {id:'lost-shelf',asset:asset('assets/scenes/01-department-office/props/lost-property-shelf-clean.png'),x:3290,y:308,w:690,h:860,z:30},
-    {id:'alarm-broken',asset:asset('assets/scenes/01-department-office/props/alarm-broken-clean.png'),x:2875,y:210,w:145,h:220,z:18,hiddenWhen:'alarmRepaired'},
-    {id:'alarm-repaired',asset:asset('assets/scenes/01-department-office/props/alarm-repaired.svg'),x:2890,y:220,w:110,h:165,z:18,visibleWhen:'alarmRepaired'}
+  background: assetUrl(`${A}scenes/01-department-office/background-flat.svg`),
+  layers: [
+    { id: 'office-window-rain', kind: 'effect', x: 0, y: 0, w: 4096, h: 1152, z: 4, className: 'office-window-rain', locked: true },
+    { id: 'desk', hotspotId: 'desk', asset: assetUrl(`${A}scenes/01-department-office/props/desk.svg`), x: 25, y: 735, w: 790, h: 345, z: 48 },
+    { id: 'forms', hotspotId: 'forms', asset: assetUrl(`${A}scenes/01-department-office/props/forms.svg`), x: 100, y: 815, w: 245, h: 120, z: 52 },
+    { id: 'rulers', hotspotId: 'rulers', asset: assetUrl(`${A}scenes/01-department-office/props/rulers.svg`), x: 365, y: 860, w: 270, h: 74, z: 53, hiddenWhen: 'rulersTaken' },
+    { id: 'pindle', hotspotId: 'pindle', asset: assetUrl(`${A}characters/pindle/idle.svg`), x: 185, y: 415, w: 430, h: 470, z: 34, className: 'npc-breathe' },
+    { id: 'terminal', hotspotId: 'terminal', asset: assetUrl(`${A}scenes/01-department-office/props/terminal.svg`), x: 1030, y: 345, w: 355, h: 485, z: 30 },
+    { id: 'parcel', asset: assetUrl(`${A}scenes/01-department-office/props/parcel.svg`), x: 1110, y: 650, w: 190, h: 120, z: 35, visibleWhen: 'drillTriggered', hiddenWhen: 'packageOpened' },
+    { id: 'poster', hotspotId: 'poster', asset: assetUrl(`${A}scenes/01-department-office/props/emergency-poster.svg`), x: 1460, y: 170, w: 305, h: 245, z: 12 },
+    { id: 'clock-normal', syncGroup: 'clock', hotspotId: 'clock', asset: assetUrl(`${A}scenes/01-department-office/props/clock-normal.svg`), x: 2050, y: 78, w: 270, h: 270, z: 12, hiddenWhen: 'drillTriggered' },
+    { id: 'clock-tomorrow', syncGroup: 'clock', hotspotId: 'clock', asset: assetUrl(`${A}scenes/01-department-office/props/clock-tomorrow.svg`), x: 2050, y: 78, w: 270, h: 270, z: 12, visibleWhen: 'drillTriggered' },
+    { id: 'calendar-today', syncGroup: 'calendar', asset: assetUrl(`${A}scenes/01-department-office/props/calendar-today.svg`), x: 2365, y: 130, w: 155, h: 195, z: 12, hiddenWhen: 'drillTriggered' },
+    { id: 'calendar-tomorrow', syncGroup: 'calendar', asset: assetUrl(`${A}scenes/01-department-office/props/calendar-tomorrow.svg`), x: 2365, y: 130, w: 155, h: 195, z: 12, visibleWhen: 'drillTriggered' },
+    { id: 'fishbowl', hotspotId: 'fishbowl', asset: assetUrl(`${A}scenes/01-department-office/props/fishbowl.svg`), x: 2500, y: 500, w: 420, h: 535, z: 35 },
+    { id: 'handle', hotspotId: 'handle', asset: assetUrl(`${A}scenes/01-department-office/props/alarm-handle.svg`), x: 2675, y: 765, w: 75, h: 90, z: 38, hiddenWhen: 'handleTaken' },
+    { id: 'alarm-broken', syncGroup: 'alarm', hotspotId: 'alarm', asset: assetUrl(`${A}scenes/01-department-office/props/alarm-broken.svg`), x: 2970, y: 225, w: 135, h: 210, z: 15, hiddenWhen: 'alarmRepaired' },
+    { id: 'alarm-repaired', syncGroup: 'alarm', hotspotId: 'alarm', asset: assetUrl(`${A}scenes/01-department-office/props/alarm-repaired.svg`), x: 2970, y: 225, w: 135, h: 210, z: 15, visibleWhen: 'alarmRepaired' },
+    { id: 'lost-shelf', hotspotId: 'shelf', asset: assetUrl(`${A}scenes/01-department-office/props/lost-shelf.svg`), x: 3260, y: 305, w: 680, h: 760, z: 33 },
+    { id: 'gus', hotspotId: 'gus', asset: assetUrl(`${A}characters/gus/folded.svg`), x: 3525, y: 570, w: 150, h: 360, z: 39, hiddenWhen: 'packageOpened' },
+    { id: 'city-map', hotspotId: 'map-exit', asset: assetUrl(`${A}scenes/01-department-office/props/city-map.svg`), x: 3370, y: 75, w: 470, h: 300, z: 11 },
+    { id: 'emergency-flash', kind: 'effect', x: 0, y: 0, w: 4096, h: 1152, z: 74, className: 'emergency-flash', visibleWhen: 'drillTriggered', locked: true }
   ],
-  hotspots:[
-    {id:'pindle',label:'Mr. Pindle',x:40,y:350,w:620,h:390,walk:{x:760,y:920}},
-    {id:'terminal',label:'pneumatic delivery terminal',x:1020,y:325,w:330,h:470,walk:{x:1220,y:920}},
-    {id:'poster',label:'emergency continuity procedure',x:1110,y:140,w:220,h:180,walk:{x:1240,y:795}},
-    {id:'clock',label:'official municipal clock',x:2030,y:55,w:290,h:275,walk:{x:2190,y:840}},
-    {id:'alarm',label:'fire alarm',x:2865,y:200,w:165,h:235,walk:{x:2900,y:920}},
-    {id:'rulers',label:'matched ruler pair',x:70,y:905,w:430,h:120,walk:{x:690,y:1000},hiddenWhen:'rulersTaken'},
-    {id:'fishbowl',label:'Mr. Ledger’s fishbowl',x:2480,y:505,w:420,h:545,walk:{x:2670,y:1005}},
-    {id:'shelf',label:'lost-property shelf',x:3290,y:300,w:700,h:865,walk:{x:3480,y:1005}},
-    {id:'map-exit',label:'route to Gannet’s End Harbor',x:3020,y:50,w:640,h:460,walk:{x:3170,y:915},visibleWhen:'officeComplete'},
-    {id:'forms',label:'complaint form stack',x:35,y:795,w:360,h:215,walk:{x:610,y:1000}},
-    {id:'desk',label:'Mara’s desk',x:25,y:770,w:760,h:280,walk:{x:860,y:1005}}
+  hotspots: [
+    { id: 'pindle', label: 'Mr. Pindle', x: 145, y: 380, w: 520, h: 530, walk: { x: 760, y: 920 } },
+    { id: 'terminal', label: 'pneumatic delivery terminal', x: 1010, y: 330, w: 395, h: 520, walk: { x: 1230, y: 930 } },
+    { id: 'poster', label: 'emergency continuity procedure', x: 1450, y: 150, w: 330, h: 285, walk: { x: 1585, y: 805 } },
+    { id: 'clock', label: 'official municipal clock', x: 2025, y: 55, w: 320, h: 315, walk: { x: 2200, y: 835 } },
+    { id: 'alarm', label: 'fire alarm', x: 2945, y: 200, w: 185, h: 255, walk: { x: 3010, y: 925 } },
+    { id: 'rulers', label: 'matched ruler pair', x: 340, y: 835, w: 315, h: 115, walk: { x: 730, y: 1005 }, hiddenWhen: 'rulersTaken' },
+    { id: 'handle', label: 'missing fire-alarm handle', x: 2640, y: 725, w: 145, h: 155, walk: { x: 2690, y: 1000 }, hiddenWhen: 'handleTaken' },
+    { id: 'fishbowl', label: 'Mr. Ledger’s fishbowl', x: 2480, y: 485, w: 455, h: 570, walk: { x: 2670, y: 1010 } },
+    { id: 'gus', label: 'disapproving umbrella', x: 3485, y: 535, w: 225, h: 415, walk: { x: 3400, y: 1010 } },
+    { id: 'shelf', label: 'lost-property shelf', x: 3235, y: 285, w: 720, h: 800, walk: { x: 3500, y: 1010 } },
+    { id: 'map-exit', label: 'route to Gannet’s End Harbor', x: 3340, y: 50, w: 530, h: 350, walk: { x: 3330, y: 920 }, visibleWhen: 'officeComplete' },
+    { id: 'forms', label: 'complaint form stack', x: 70, y: 790, w: 310, h: 180, walk: { x: 650, y: 1000 } },
+    { id: 'desk', label: 'Mara’s desk', x: 20, y: 715, w: 820, h: 380, walk: { x: 875, y: 1010 } }
   ]
 };

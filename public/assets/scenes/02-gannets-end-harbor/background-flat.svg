@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2600" height="1000" viewBox="0 0 2600 1000"><title>Harbor flat calibration background</title><rect width="2600" height="1000" fill="#263b49"/>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#263b49"/><stop offset="1" stop-color="#718081"/></linearGradient><linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#476b72"/><stop offset="1" stop-color="#183c46"/></linearGradient><pattern id="dock" width="130" height="44" patternUnits="userSpaceOnUse"><rect width="130" height="44" fill="#6a4b32"/><path d="M0 42H130M126 0V44" stroke="#3a291e" stroke-width="6"/></pattern></defs>
+<rect width="2600" height="520" fill="url(#sky)"/><rect y="520" width="2600" height="225" fill="url(#sea)"/><rect y="745" width="2600" height="255" fill="url(#dock)"/>
+<path d="M0 655C300 610 520 700 810 650S1340 600 1650 660 2200 610 2600 650V745H0Z" fill="#244d57"/>
+<g fill="#2f241d"><rect x="390" y="670" width="38" height="330"/><rect x="980" y="650" width="38" height="350"/><rect x="1710" y="665" width="38" height="335"/><rect x="2360" y="640" width="38" height="360"/></g>
+<text x="1300" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="40" font-weight="700" fill="#e8d59e">GANNET’S END HARBOR — CALIBRATION ROOM</text></svg>

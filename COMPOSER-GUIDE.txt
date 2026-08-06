@@ -1,0 +1,33 @@
+MARA QUILBLE — SCENE COMPOSER QUICK GUIDE
+==========================================
+
+1. Apply this ZIP over the current project root.
+2. Run the game normally.
+3. Click “Scene composer” in the header.
+4. Select Office or Harbor from the composer panel.
+5. Drag a visual object directly in the scene.
+6. Drag the yellow square at the lower-right corner to resize it.
+7. Use the numeric fields for precise X, Y, width, height, Z-index and opacity.
+8. Arrow keys move the selected element by 1 pixel.
+9. Shift + arrow moves it by 10 pixels.
+10. “Move matching hotspot” keeps the object’s interaction area aligned.
+11. Hotspots can also be selected and edited independently from the dropdown.
+12. Use the camera slider at the bottom of the room to inspect a wide scene.
+13. Export JSON when the composition is ready.
+14. Upload that JSON in the next chat turn.
+
+The exported file is named:
+
+  <scene-id>-composition.json
+
+Scene composition data is stored separately from the game save. Pressing Restart does
+not delete composition work. Use “Reset scene” inside the composer only when you want
+to discard a room’s layout edits.
+
+State variants move together where appropriate, including:
+- office clock today/tomorrow
+- office calendar today/tomorrow
+- office alarm broken/repaired
+- Captain Nib without/with hat
+- harbor pump with/without funnel
+- harbor sign hanging/fallen

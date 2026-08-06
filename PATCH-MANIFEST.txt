@@ -1,17 +1,88 @@
-MARA QUIBBLE FOUNDATION v1.0.0
+MARA QUILBLE AND THE MISSING MINUTE
+SCENES 01–02 + SCENE COMPOSER FOUNDATION PATCH
+================================================
+Patch version: 1.1.0
+Base: src.zip supplied in the current conversation
+Scope: changed and new files only; this is not the full project
 
-This is a full replacement baseline, not a patch over v0.3.
+WHAT THIS PATCH ADDS
+--------------------
+1. Playable schematic art for Scene 1: Department of Lost Causes.
+2. Playable schematic art for Scene 2: Gannet’s End Harbor.
+3. Lightweight SVG calibration assets for:
+   - both room backgrounds
+   - Mara, Pindle, Nib, Brine, Gus and the mechanical gull
+   - all major scene props and state variants
+   - inventory items
+   - action buttons
+4. A direct-manipulation Scene Composer:
+   - drag scene visuals
+   - resize with an on-scene handle
+   - numeric X/Y/width/height/Z/opacity controls
+   - actor start-position and scale editing
+   - hotspot position, size and walk-point editing
+   - optional linked hotspot movement
+   - linked movement of state variants
+   - camera pan controls for wide scenes
+   - keyboard nudging
+   - JSON import, export and clipboard copy
+   - per-scene browser persistence
+5. Scene-critical objects that were previously unreachable or absent from the rendered
+   configuration are now represented, including the alarm handle, Gus, Captain Nib,
+   Madame Brine and the harbor state variants.
+6. Restart now clears only the game save and preserves Scene Composer work.
+7. Automated scene validation tests.
 
-NEW FOUNDATION:
-- Modular engine and UI
-- Data-driven Office scene
-- Data-driven Harbor scene
-- Clean vector backgrounds
-- Transparent vector character sprites
-- Individually named z-order layers
-- Stateful pickable-object art
-- Full initial dialogue and puzzle implementation
-- Incremental patching documentation
+STORY CONTENT
+-------------
+The existing Scene 1 and Scene 2 logic and dialogue files were preserved unchanged.
+This patch supplies the schematic visuals, scene configuration and editor needed to use
+that existing content.
 
-NEXT EXPECTED PATCH:
-Scene 03 — Lighthouse exterior / landing
+HOW TO APPLY
+------------
+Extract this ZIP into the current project root and allow matching files to be replaced.
+Do not delete the rest of the project.
+
+Then run:
+
+  npm install
+  npm test
+  npm run dev
+
+TEST STATUS
+-----------
+- Node gameplay/geometry/recipe/scene tests: 7 passed, 0 failed.
+- TypeScript JSX syntax validation: passed.
+- Every referenced schematic asset was checked for a matching file.
+- A production Vite build could not be executed in the ChatGPT container because its
+  package registry did not provide the project’s Vite dependencies. This was an
+  environment dependency-installation limitation, not a source-code test failure.
+
+CHANGED FILES
+-------------
+package.json
+package-lock.json
+src/app/App.jsx
+src/engine/LayerEditor.jsx
+src/engine/SceneRenderer.jsx
+src/engine/state.js
+src/scenes/01-department-office/scene.config.js
+src/scenes/02-gannets-end-harbor/scene.config.js
+src/styles.css
+
+NEW FILES
+---------
+COMPOSER-GUIDE.txt
+src/scenes/scenes.test.js
+public/assets/** (69 lightweight SVG calibration assets)
+PATCH-MANIFEST.txt
+
+NOT INCLUDED
+------------
+- Unchanged dialogue files
+- Unchanged scene logic files
+- Unchanged shared project files
+- node_modules
+- build output
+- finished painterly artwork

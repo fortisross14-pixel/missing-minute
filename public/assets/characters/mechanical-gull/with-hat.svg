@@ -1,18 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="210" height="190" viewBox="0 0 210 190">
-    <defs>
-      <filter id="rough"><feTurbulence baseFrequency=".012" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/></filter>
-      <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".45"/></filter>
-      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#81532f"/><stop offset="1" stop-color="#3d281d"/></linearGradient>
-      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d27d"/><stop offset=".45" stop-color="#a86b28"/><stop offset="1" stop-color="#5d3617"/></linearGradient>
-      <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3e7772"/><stop offset="1" stop-color="#153f40"/></linearGradient>
-      <radialGradient id="glass"><stop stop-color="#d9f3ee" stop-opacity=".65"/><stop offset="1" stop-color="#5f9d9c" stop-opacity=".25"/></radialGradient>
-    </defs>
-<g filter="url(#shadow)" stroke="#231b18" stroke-linejoin="round">
- <path d="M36 105Q62 62 113 75Q154 76 176 115Q144 105 125 123Q81 137 36 105z" fill="#a8b5b0" stroke-width="7"/>
- <path d="M111 78Q129 45 159 50Q185 56 183 83Q163 68 141 81" fill="#b9c4be" stroke-width="7"/>
- <circle cx="158" cy="66" r="7" fill="#d6b059"/><circle cx="160" cy="65" r="3" fill="#151312"/>
- <path d="M180 70L204 80L181 89z" fill="#d38b33" stroke-width="5"/>
- <path d="M75 126L66 169M127 126L139 169" stroke="#a66d32" stroke-width="8"/><path d="M52 170H83M125 170H155" stroke="#a66d32" stroke-width="8"/>
- <path d="M121 23Q158 0 190 26L183 51H126z" fill="#243d43" stroke-width="7"/><path d="M111 49H198" stroke="#d1a45d" stroke-width="10"/>
- <circle cx="83" cy="101" r="8" fill="#7d3d31"/><path d="M63 103L36 88" stroke="#6c817d" stroke-width="6"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="175" viewBox="0 0 200 175"><title>Mechanical gull with hat</title><rect width="200" height="175" fill="none"/><ellipse cx="95" cy="155" rx="70" ry="14" fill="#000" opacity=".22"/><path d="M35 95Q70 35 115 70Q155 60 170 105Q135 130 90 125Q55 130 35 95Z" fill="#8da4a5" stroke="#263135" stroke-width="8"/><circle cx="126" cy="78" r="7" fill="#e6bd62"/><path d="M164 94L190 105L163 114Z" fill="#d7a54a"/><path d="M70 125L60 160M120 125L130 160" stroke="#705a3b" stroke-width="8"/><path d="M76 43Q115 10 153 46L162 66H65Z" fill="#ece3c6" stroke="#26211c" stroke-width="7"/><rect x="60" y="62" width="106" height="14" fill="#29485a"/><text x="100" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#f5e7bf">GULL</text></svg>
