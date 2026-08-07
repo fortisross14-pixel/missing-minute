@@ -6,6 +6,7 @@ import {
   getSelectionEntity
 } from './LayerEditor';
 import { clamp, clampToPolygons, perspectiveScale, resolveDepth } from './geometry';
+import { officialDateFor, splitFlapCharacters } from '../game/calendar';
 
 function visible(entity, flags) {
   if (entity.hidden) return false;
@@ -14,7 +15,29 @@ function visible(entity, flags) {
   return true;
 }
 
-function SceneLayer({ layer, flags }) {
+function SplitFlapRow({ value, className = '' }) {
+  return <div className={`split-flap-row ${className}`}>{splitFlapCharacters(value).map(({character,index}) => <span
+    key={`${value}-${index}`}
+    className={`split-flap-cell ${character === ' ' ? 'space' : ''}`}
+    style={{ animationDelay: `${index * 28}ms` }}
+  >{character === ' ' ? '\u00a0' : character}</span>)}</div>;
+}
+
+function SplitFlapCalendar({ layer, flags, style }) {
+  const date = officialDateFor(layer, flags);
+  return <div className={`world-layer split-flap-calendar ${layer.className || ''}`} style={style} data-date={date.iso}>
+    <div className="split-flap-label">{layer.label || 'OFFICIAL MUNICIPAL DATE'}</div>
+    <SplitFlapRow value={date.weekday}/>
+    <div className="split-flap-date-line">
+      <SplitFlapRow value={date.day} className="day"/>
+      <SplitFlapRow value={date.month} className="month"/>
+      <SplitFlapRow value={date.year} className="year"/>
+    </div>
+    <SplitFlapRow value={date.status} className="status"/>
+  </div>;
+}
+
+function SceneLayer({ layer, flags, previewAsset }) {
   if (!visible(layer, flags)) return null;
   const style = {
     left: layer.x,
@@ -26,7 +49,8 @@ function SceneLayer({ layer, flags }) {
     transform: layer.flipX ? 'scaleX(-1)' : undefined
   };
   if (layer.kind === 'effect') return <div className={`world-layer effect ${layer.className || ''}`} style={style}/>;
-  return <img className={`world-layer ${layer.className || ''}`} style={style} src={layer.asset} alt="" draggable="false"/>;
+  if (layer.kind === 'split-flap-date') return <SplitFlapCalendar layer={layer} flags={flags} style={style}/>;
+  return <img className={`world-layer ${layer.className || ''}`} style={style} src={previewAsset || layer.asset} alt="" draggable="false"/>;
 }
 
 function selectionMatches(selection, type, id) {
@@ -43,6 +67,7 @@ export default function SceneRenderer({
   overrides,
   setOverrides,
   composer,
+  assetPreviews = {},
   inputLocked,
   debugHotspots
 }) {
@@ -135,12 +160,14 @@ export default function SceneRenderer({
   const depth = resolveDepth(scene, actorPosition);
   const actorScale = perspectiveScale(scene, actorPosition.y);
   const actorWidth = composer.active ? composedActor.width : (scene.actor?.width ?? composedActor.width);
-  const actorAsset = moving && scene.actor?.walkAsset ? scene.actor.walkAsset : scene.actor?.asset;
+  const actorPreview = assetPreviews[`${scene.id}:actor:mara`]?.url;
+  const actorAsset = actorPreview || (moving && scene.actor?.walkAsset ? scene.actor.walkAsset : scene.actor?.asset);
+  const backgroundAsset = assetPreviews[`${scene.id}:background`]?.url || scene.background;
 
   function updateComposerSelection(patch, selectionOverride = null) {
     const selection = selectionOverride || composer.selection;
     const entity = getSelectionEntity(scene, overrides, selection);
-    if (!selection || !entity) return;
+    if (!selection || !entity || selection.type === 'background') return;
 
     setOverrides((current) => {
       const next = {
@@ -250,8 +277,8 @@ export default function SceneRenderer({
     onPointerMove={continueComposerDrag} onPointerUp={endComposerDrag} onPointerCancel={endComposerDrag}>
     <div className="scene-camera" style={{ transform: `translate3d(${-cameraX * metrics.scale}px,0,0)` }}>
       <div className="scene-world" style={{ width: scene.world.width, height: scene.world.height, transform: `scale(${metrics.scale})` }} onClick={clickStage}>
-        <img className="scene-background" src={scene.background} alt={scene.name}/>
-        {layers.map((layer) => <SceneLayer key={layer.id} layer={layer} flags={flags}/>)}
+        <img className="scene-background" src={backgroundAsset} alt={scene.name}/>
+        {layers.map((layer) => <SceneLayer key={layer.id} layer={layer} flags={flags} previewAsset={assetPreviews[`${scene.id}:layer:${layer.id}`]?.url}/>)}
         <img
           className={`player-actor ${moving ? 'is-walking' : 'is-idle'} facing-${facing}`}
           src={actorAsset}
@@ -313,7 +340,7 @@ export default function SceneRenderer({
             title={`Move hotspot: ${composer.selection.id}`}
           ><span>hotspot: {composer.selection.id}</span></button>}
 
-          {composer.selection && selectedEntity && composer.selection.type !== 'actor' && <button
+          {composer.selection && selectedEntity && (composer.selection.type === 'layer' || composer.selection.type === 'hotspot') && <button
             type="button"
             className="composer-resize-handle"
             aria-label="Resize selected element"

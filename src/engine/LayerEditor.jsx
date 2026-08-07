@@ -87,6 +87,7 @@ export function effectiveActor(scene, overrides) {
 
 export function getSelectionEntity(scene, overrides, selection) {
   if (!selection) return null;
+  if (selection.type === 'background') return { x: 0, y: 0, w: scene.world.width, h: scene.world.height, locked: true };
   if (selection.type === 'actor') return effectiveActor(scene, overrides);
   if (selection.type === 'layer') {
     const layer = scene.layers.find((entry) => entry.id === selection.id);
@@ -101,8 +102,25 @@ export function getSelectionEntity(scene, overrides, selection) {
 
 function selectionLabel(selection) {
   if (!selection) return 'Nothing selected';
+  if (selection.type === 'background') return 'Background plate';
   if (selection.type === 'actor') return 'Mara (start position)';
   return `${selection.type === 'layer' ? 'Visual' : 'Hotspot'}: ${selection.id}`;
+}
+
+export function assetPreviewKey(sceneId, selection) {
+  if (!selection) return null;
+  if (selection.type === 'background') return `${sceneId}:background`;
+  if (selection.type === 'actor') return `${sceneId}:actor:mara`;
+  if (selection.type === 'layer') return `${sceneId}:layer:${selection.id}`;
+  return null;
+}
+
+function expectedArtPath(scene, selection) {
+  if (!selection) return '';
+  if (selection.type === 'background') return scene.artSlots?.background || '';
+  if (selection.type === 'actor') return scene.artSlots?.actor || '';
+  if (selection.type === 'layer') return scene.artSlots?.layers?.[selection.id] || '';
+  return '';
 }
 
 function NumberInput({ label, value, onChange, step = 1 }) {
@@ -117,14 +135,19 @@ export default function LayerEditor({
   setSelection,
   linkHotspot,
   setLinkHotspot,
+  assetPreviews,
+  onPreviewAsset,
+  onClearPreviewAsset,
   onClose,
   onSceneChange
 }) {
   const importRef = useRef(null);
+  const assetRef = useRef(null);
   const [notice, setNotice] = useState('');
   const entity = useMemo(() => getSelectionEntity(scene, overrides, selection), [scene, overrides, selection]);
 
   const targets = useMemo(() => [
+    { value: 'background:plate', label: 'BACKGROUND — clean room plate' },
     { value: 'actor:mara', label: 'ACTOR — Mara start position' },
     ...scene.layers.filter((layer) => layer.kind !== 'effect').map((layer) => ({ value: `layer:${layer.id}`, label: `VISUAL — ${layer.id}` })),
     ...scene.hotspots.map((hotspot) => ({ value: `hotspot:${hotspot.id}`, label: `HOTSPOT — ${hotspot.id}` }))
@@ -155,7 +178,7 @@ export default function LayerEditor({
   });
 
   function patchSelection(patch, relative = false) {
-    if (!selection || !entity) return;
+    if (!selection || !entity || selection.type === 'background') return;
     setOverrides((current) => {
       const next = normalizeOverrides(current, scene.id);
       const applyPatch = (base) => {
@@ -245,7 +268,7 @@ export default function LayerEditor({
   }
 
   function resetSelected() {
-    if (!selection) return;
+    if (!selection || selection.type === 'background') return;
     setOverrides((current) => {
       const next = normalizeOverrides(current, scene.id);
       if (selection.type === 'actor') return { ...next, actor: {} };
@@ -297,14 +320,27 @@ export default function LayerEditor({
 
   const selectionValue = selection ? `${selection.type}:${selection.id}` : '';
   const canResize = selection?.type === 'layer' || selection?.type === 'hotspot';
+  const previewKey = assetPreviewKey(scene.id, selection);
+  const expectedPath = expectedArtPath(scene, selection);
+  const currentPreview = previewKey ? assetPreviews?.[previewKey] : null;
+  const canPreviewAsset = Boolean(previewKey && (selection?.type === 'background' || selection?.type === 'actor' || (selection?.type === 'layer' && entity?.asset)));
+
+  async function previewAsset(event) {
+    const file = event.target.files?.[0];
+    if (!file || !previewKey) return;
+    onPreviewAsset?.(previewKey, file);
+    setNotice(`Previewing ${file.name}. The file is not embedded in composition JSON.`);
+    event.target.value = '';
+  }
 
   return <aside className="layer-editor" aria-label="Scene composer">
     <div className="layer-editor__header"><strong>Scene Composer</strong><button onClick={onClose} aria-label="Close composer">×</button></div>
     <p>Drag objects in the room. Drag the square handle to resize. Arrow keys move 1 px; Shift + arrow moves 10 px.</p>
 
-    <div className="composer-scene-switch">
+    <div className="composer-scene-switch three-scenes">
       <button className={scene.id === '01-department-office' ? 'active' : ''} onClick={() => onSceneChange('01-department-office')}>Office</button>
       <button className={scene.id === '02-gannets-end-harbor' ? 'active' : ''} onClick={() => onSceneChange('02-gannets-end-harbor')}>Harbor</button>
+      <button className={scene.id === '03-gannets-end-lighthouse' ? 'active' : ''} onClick={() => onSceneChange('03-gannets-end-lighthouse')}>Lighthouse</button>
     </div>
 
     <label>Selected element<select value={selectionValue} onChange={(event) => {
@@ -314,7 +350,18 @@ export default function LayerEditor({
 
     <div className="composer-selection-name">{selectionLabel(selection)}</div>
 
-    {entity && <div className="layer-editor__controls">
+    {canPreviewAsset && <section className="composer-asset-replacement">
+      <strong>Replacement preview</strong>
+      {expectedPath && <><small>Final file path</small><code>{expectedPath}</code></>}
+      <div className="layer-editor__actions wrap">
+        <button onClick={() => assetRef.current?.click()}>Choose PNG</button>
+        {currentPreview && <button onClick={() => onClearPreviewAsset?.(previewKey)}>Clear preview</button>}
+        <input ref={assetRef} hidden type="file" accept="image/png,.png" onChange={previewAsset}/>
+      </div>
+      <small>{currentPreview ? `Previewing: ${currentPreview.name}` : 'Session-only preview. Position, scale, depth and hotspots stay unchanged.'}</small>
+    </section>}
+
+    {entity && selection?.type !== 'background' && <div className="layer-editor__controls">
       <NumberInput label="X" value={entity.x} onChange={(value) => updateField('x', value)}/>
       <NumberInput label="Y" value={entity.y} onChange={(value) => updateField('y', value)}/>
       {selection.type === 'actor' && <NumberInput label="Width" value={entity.width} onChange={(value) => updateField('width', Math.max(24, value))}/>} 

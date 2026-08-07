@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import SceneRenderer from '../engine/SceneRenderer';
 import LayerEditor, { useSceneOverrides } from '../engine/LayerEditor';
-import { initialState, loadState, saveState, SAVE_KEY } from '../engine/state';
+import { initialState, loadState, saveState, saveManualState, loadManualState, SAVE_KEY } from '../engine/state';
 import { sounds } from '../engine/audio';
 import { ITEMS, recipeFor } from '../game/items';
 import { currentObjective } from '../game/objectives';
@@ -27,22 +27,58 @@ export default function App() {
   const [thought,setThought]=useState('');
   const [message,setMessage]=useState('');
   const [showComposer,setShowComposer]=useState(false);
+  const [showPauseMenu,setShowPauseMenu]=useState(false);
   const [composerSelection,setComposerSelection]=useState(null);
   const [linkHotspot,setLinkHotspot]=useState(true);
   const [debugHotspots,setDebugHotspots]=useState(false);
   const [hoveredHotspot,setHoveredHotspot]=useState(null);
   const [hoveredInventory,setHoveredInventory]=useState(null);
+  const [assetPreviews,setAssetPreviews]=useState({});
   const scene=SCENES[state.sceneId];
   const [overrides,setOverrides]=useSceneOverrides(state.sceneId);
   const objective=useMemo(()=>currentObjective(state),[state]);
-  const inputLocked=Boolean(dialogue||popup);
+  const inputLocked=Boolean(dialogue||popup||showPauseMenu);
 
   useEffect(()=>saveState(state),[state]);
+
+  useEffect(()=>()=>{
+    Object.values(assetPreviews).forEach((preview)=>preview?.url&&URL.revokeObjectURL(preview.url));
+  },[]);
+
+  const previewAsset=(key,file)=>{
+    const url=URL.createObjectURL(file);
+    setAssetPreviews((current)=>{
+      if(current[key]?.url) URL.revokeObjectURL(current[key].url);
+      return {...current,[key]:{url,name:file.name}};
+    });
+  };
+
+  const clearPreviewAsset=(key)=>setAssetPreviews((current)=>{
+    if(current[key]?.url) URL.revokeObjectURL(current[key].url);
+    const next={...current};
+    delete next[key];
+    return next;
+  });
 
   useEffect(()=>{
     if(state.sceneId==='01-department-office'&&!state.flags.introSeen&&!dialogue) startDialogue('office.opening');
     if(state.sceneId==='02-gannets-end-harbor'&&!state.flags.harborIntroSeen&&!dialogue) startDialogue('harbor.opening');
-  },[state.sceneId,state.flags.introSeen,state.flags.harborIntroSeen]);
+    if(state.sceneId==='03-gannets-end-lighthouse'&&!state.flags.lighthouseIntroSeen&&!dialogue) startDialogue('lighthouse.opening');
+  },[state.sceneId,state.flags.introSeen,state.flags.harborIntroSeen,state.flags.lighthouseIntroSeen]);
+
+  useEffect(()=>{
+    const onKey=(event)=>{
+      if(event.key!=='Escape') return;
+      event.preventDefault();
+      if(showComposer) {
+        setShowComposer(false);
+        return;
+      }
+      setShowPauseMenu((open)=>!open);
+    };
+    window.addEventListener('keydown',onKey);
+    return ()=>window.removeEventListener('keydown',onKey);
+  },[showComposer]);
 
   const setFlags=(patch)=>setState((s)=>({...s,flags:{...s.flags,...patch}}));
   const has=(id)=>state.inventory.includes(id);
@@ -90,7 +126,7 @@ export default function App() {
   };
 
   const changeScene=(sceneId)=>{
-    setDialogue(null); setMessage(''); setThought(''); setHoveredHotspot(null); setHoveredInventory(null);
+    setDialogue(null); setMessage(''); setThought(''); setHoveredHotspot(null); setHoveredInventory(null); setShowPauseMenu(false);
     setState((s)=>({...s,sceneId,selectedItem:null,verb:'walk'}));
   };
 
@@ -144,22 +180,22 @@ export default function App() {
   };
 
   const closePopup=()=>setPopup((p)=>p.index<p.items.length-1?{...p,index:p.index+1}:null);
-  const reset=()=>{localStorage.removeItem(SAVE_KEY);setState(structuredClone(initialState));setDialogue(null);setPopup(null);setThought('');setMessage('');};
+  const reset=()=>{localStorage.removeItem(SAVE_KEY);setState(structuredClone(initialState));setDialogue(null);setPopup(null);setThought('');setMessage('');setShowPauseMenu(false);};
+  const manualSave=()=>{
+    const saved=saveManualState(state);
+    setShowPauseMenu(false);
+    say(saved?'Game saved. The Department has reluctantly acknowledged your progress.':'The save failed. The Department denies responsibility.');
+  };
+  const manualLoad=()=>{
+    const saved=loadManualState();
+    if(!saved) { setShowPauseMenu(false); return say('No manual save exists yet.'); }
+    setState(saved);setDialogue(null);setPopup(null);setThought('');setMessage('Game loaded. Continuity restored.');setShowPauseMenu(false);
+  };
 
   if(state.sceneId==='ending') return <Ending/>;
   const position=state.positions[state.sceneId]||scene.start;
 
   return <main className="game-shell">
-    <header className="game-header">
-      <div><h1>Mara Quibble and the Missing Minute</h1><p>{scene.name}</p></div>
-      <div className="header-actions">
-        <button onClick={()=>setShowComposer((x)=>!x)}>{showComposer?'Close composer':'Scene composer'}</button>
-        <button onClick={()=>setDebugHotspots((x)=>!x)}>{debugHotspots?'Hide':'Show'} hotspots</button>
-        <button onClick={()=>setState((s)=>({...s,mute:!s.mute}))}>{state.mute?'Sound off':'Sound on'}</button>
-        <button onClick={reset}>Restart</button>
-      </div>
-    </header>
-
     <section className="game-frame">
       <SceneRenderer
         scene={scene}
@@ -170,6 +206,7 @@ export default function App() {
         overrides={overrides}
         setOverrides={setOverrides}
         composer={{active:showComposer,selection:composerSelection,setSelection:setComposerSelection,linkHotspot}}
+        assetPreviews={assetPreviews}
         inputLocked={inputLocked || showComposer}
         debugHotspots={debugHotspots}
         onHotspotHover={setHoveredHotspot}
@@ -177,6 +214,7 @@ export default function App() {
       <Thought text={thought}/>
       <Message text={message} onClose={()=>setMessage('')}/>
       <div className="objective-ribbon"><span>OBJECTIVE</span>{objective}</div>
+      <div className="scene-caption">{scene.name}</div>
     </section>
 
     <section className="game-controls">
@@ -187,6 +225,21 @@ export default function App() {
 
     <DialoguePanel dialogue={dialogue} onAdvance={advanceDialogue} onChoice={chooseDialogue} flags={state.flags}/>
     <ItemPopup popup={popup} onClose={closePopup}/>
-    {showComposer&&<LayerEditor scene={scene} overrides={overrides} setOverrides={setOverrides} selection={composerSelection} setSelection={setComposerSelection} linkHotspot={linkHotspot} setLinkHotspot={setLinkHotspot} onSceneChange={changeScene} onClose={()=>setShowComposer(false)}/>} 
+
+    {showPauseMenu&&<div className="pause-shade" onClick={()=>setShowPauseMenu(false)}>
+      <section className="pause-menu" onClick={(event)=>event.stopPropagation()} aria-label="Game menu">
+        <div className="pause-menu__title"><strong>Mara Quibble</strong><span>{scene.name}</span></div>
+        <button onClick={()=>setShowPauseMenu(false)}>Resume</button>
+        <button onClick={manualSave}>Save game</button>
+        <button onClick={manualLoad}>Load game</button>
+        <button onClick={()=>{setShowPauseMenu(false);setShowComposer(true);}}>Scene composer</button>
+        <button onClick={()=>setDebugHotspots((shown)=>!shown)}>{debugHotspots?'Hide':'Show'} hotspots</button>
+        <button onClick={()=>setState((s)=>({...s,mute:!s.mute}))}>{state.mute?'Enable sound':'Mute sound'}</button>
+        <button className="danger" onClick={reset}>Restart game</button>
+        <small>Press Esc to close this menu.</small>
+      </section>
+    </div>}
+
+    {showComposer&&<LayerEditor scene={scene} overrides={overrides} setOverrides={setOverrides} selection={composerSelection} setSelection={setComposerSelection} linkHotspot={linkHotspot} setLinkHotspot={setLinkHotspot} assetPreviews={assetPreviews} onPreviewAsset={previewAsset} onClearPreviewAsset={clearPreviewAsset} onSceneChange={changeScene} onClose={()=>setShowComposer(false)}/>} 
   </main>;
 }

@@ -147,3 +147,78 @@ button{cursor:pointer}
   .layer-editor{top:6px;right:6px;max-height:calc(100vh - 12px);width:min(370px,calc(100vw - 12px))}
   .composer-camera-bar{bottom:5px;padding:5px}.composer-camera-bar span{display:none}
 }
+
+/* v1.2 compact play layout, Esc menu, scrollable satchel and system date board */
+.game-shell{width:min(1280px,100%);padding:8px 10px 12px}
+.scene-viewport{height:clamp(390px,45vw,600px)}
+.scene-caption{position:absolute;right:12px;top:12px;z-index:121;padding:5px 9px;border:1px solid #9c7540;border-radius:4px;background:#15120ed8;color:#d9c28e;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.game-controls{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-areas:'status status' 'verbs inventory';gap:0;background:#251a14;overflow:hidden}
+.game-controls .status-strip{grid-area:status}
+.game-controls .action-bar{grid-area:verbs;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));height:182px;padding:8px;gap:6px;border-right:2px solid #7c5731;border-bottom:none;align-content:stretch}
+.game-controls .action-bar button{height:80px;overflow:hidden}
+.game-controls .action-bar img{width:100%;height:100%;object-fit:contain}
+.game-controls .inventory-panel{grid-area:inventory;height:182px;min-width:0;padding:7px 9px 9px;display:flex;flex-direction:column;overflow:hidden}
+.game-controls .inventory-title{flex:0 0 20px;text-align:left;padding-left:3px;margin:0 0 5px}
+.game-controls .inventory-grid{flex:1;min-height:0;display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,minmax(0,1fr));grid-auto-columns:92px;grid-template-columns:none;gap:6px;overflow-x:auto;overflow-y:hidden;padding:0 2px 5px;scrollbar-color:#9c7540 #14201d;scrollbar-width:thin;overscroll-behavior-x:contain}
+.game-controls .inventory-grid::-webkit-scrollbar{height:9px}
+.game-controls .inventory-grid::-webkit-scrollbar-track{background:#14201d;border-radius:5px}
+.game-controls .inventory-grid::-webkit-scrollbar-thumb{background:#9c7540;border-radius:5px}
+.game-controls .inventory-slot{min-height:0;height:auto;padding:3px}
+.game-controls .inventory-slot img{height:48px}
+.game-controls .inventory-slot span{font-size:10px}
+
+.pause-shade{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:#050403b8;backdrop-filter:blur(3px)}
+.pause-menu{width:min(390px,94vw);display:grid;gap:8px;padding:20px;border:5px double #bd8e49;border-radius:8px;background:linear-gradient(#24352f,#101916);box-shadow:0 20px 70px #000;color:#f6e4b8}
+.pause-menu__title{display:flex;flex-direction:column;gap:3px;padding-bottom:11px;margin-bottom:2px;border-bottom:1px solid #80653d;text-align:center}
+.pause-menu__title strong{font-size:24px}
+.pause-menu__title span{font-size:13px;color:#ccb784;text-transform:uppercase;letter-spacing:.1em}
+.pause-menu button{padding:9px 12px;border:1px solid #b08342;border-radius:4px;background:linear-gradient(#573d27,#2d2018);color:#f7e8c6}
+.pause-menu button:hover{filter:brightness(1.18)}
+.pause-menu button.danger{border-color:#a64c3e;background:linear-gradient(#71352e,#351917)}
+.pause-menu small{text-align:center;color:#bda97e;margin-top:4px}
+
+.split-flap-calendar{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border:10px solid #4a3523;border-radius:7px;background:#171b19;box-shadow:inset 0 0 0 3px #9c7540,0 7px 12px #0007;color:#f2d273;overflow:hidden;transform-origin:50% 50%}
+.split-flap-label{font:700 18px/1.1 Georgia,serif;letter-spacing:.1em;color:#c6aa70;text-align:center}
+.split-flap-row{display:flex;justify-content:center;gap:4px;min-width:0}
+.split-flap-date-line{display:flex;justify-content:center;gap:10px}
+.split-flap-cell{position:relative;display:grid;place-items:center;min-width:24px;height:38px;padding:0 4px;border:1px solid #060707;border-radius:3px;background:linear-gradient(#252a28 0 48%,#070808 49% 52%,#202522 53%);box-shadow:inset 0 1px #59605b,0 2px 2px #0009;font:700 28px/1 'Courier New',monospace;color:#f3d774;text-shadow:0 0 5px #d19d42;animation:split-flap-flip .42s ease-out both}
+.split-flap-cell.space{min-width:12px;border-color:transparent;background:transparent;box-shadow:none}
+.split-flap-row.day .split-flap-cell{color:#f5e6b0}
+.split-flap-row.status .split-flap-cell{height:29px;min-width:18px;font-size:20px;color:#8fd7ce}
+@keyframes split-flap-flip{0%{transform:rotateX(-88deg);filter:brightness(2)}65%{transform:rotateX(13deg)}100%{transform:rotateX(0);filter:brightness(1)}}
+
+.beacon-glow{background:conic-gradient(from 270deg at 10% 50%,transparent 0 43%,#fff8bdcc 48%,#d8ffff88 51%,transparent 57%);filter:blur(4px);opacity:.82;animation:beacon-sweep 4.8s infinite alternate ease-in-out;transform-origin:10% 50%}
+@keyframes beacon-sweep{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.ship-emerge{animation:ship-emerge 2.2s ease-out both;filter:drop-shadow(0 8px 16px #000a)}
+@keyframes ship-emerge{from{opacity:0;transform:translateX(80px) scale(.92);filter:blur(14px)}to{opacity:1;transform:none;filter:blur(0) drop-shadow(0 8px 16px #000a)}}
+.lighthouse-fog{opacity:.52}
+.composer-scene-switch.three-scenes{grid-template-columns:repeat(3,1fr)}
+
+@media(max-width:760px){
+  .game-shell{padding:4px}
+  .scene-viewport{height:clamp(330px,68vw,500px)}
+  .game-controls{grid-template-columns:1fr;grid-template-areas:'status' 'verbs' 'inventory'}
+  .game-controls .action-bar{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,74px);height:164px;border-right:none;border-bottom:1px solid #7c5731}
+  .game-controls .action-bar button{height:74px}
+  .game-controls .inventory-panel{height:170px}
+  .scene-caption{display:none}
+  .split-flap-cell{min-width:20px;height:33px;font-size:23px}
+}
+
+.composer-asset-replacement {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid rgba(201, 171, 99, .45);
+  background: rgba(16, 18, 18, .68);
+}
+.composer-asset-replacement strong { letter-spacing: .04em; }
+.composer-asset-replacement small { opacity: .78; }
+.composer-asset-replacement code {
+  display: block;
+  padding: 6px 8px;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.28);
+  font-size: 11px;
+}
