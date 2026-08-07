@@ -120,5 +120,5 @@ export const harborDialogues = {
     {speaker:'Gus',text:'I object to this umbrella holder.'},
     {speaker:'Captain Nib',text:'All crew members have assigned stations.'},
     {speaker:'Mara',text:'The note says the lighthouse beacon can reveal The Never Was. Let’s hope the key works.'}
-  ], completeEffects:[{type:'setFlag',key:'harborComplete',value:true},{type:'sceneChange',sceneId:'ending'}] }
+  ], completeEffects:[{type:'setFlag',key:'harborComplete',value:true},{type:'sceneChange',sceneId:'03-gannets-end-lighthouse'}] }
 };

@@ -98,15 +98,31 @@ export const officeDialogues = {
       {speaker:'Future Mara',text:'Vellum is taking the last shipment aboard The Never Was tonight. Go to Gannet’s End Harbor. Find Captain Nib. Use the lighthouse key. Do not let Vellum start the Clock at 4:17 tomorrow. Trust the other me.'},
       {speaker:'Mara',text:'I dislike receiving instructions from myself.'},
       {speaker:'Mr. Pindle',text:'It creates a difficult chain of command.'},
-      {speaker:'Gus',text:'I warned them yesterday.'},
-      {speaker:'Mara',text:'You talk?'},
-      {speaker:'Gus',text:'Only when the situation becomes meteorologically irresponsible.'}
+      {speaker:'Mara',text:'The note says to trust the other me. It does not explain which one of us has the better judgment.'},
+      {speaker:'Mr. Pindle',text:'For liability purposes, neither.'}
     ],
     completeEffects:[
       {type:'setFlag',key:'packageOpened',value:true},
+      {type:'grantItems',items:['postcard','watch','lighthouse-key','passenger-card','vellum-photo'],popupType:'YOU DISCOVERED'},
+      {type:'thought',text:'The note points to Captain Nib at Gannet’s End Harbor. Before I leave, the umbrella on the lost-property shelf has started clearing its throat.'}
+    ]
+  },
+  'office.gus.pickup': {
+    cinematic:true,
+    lines:[
+      {speaker:'Gus',text:'I warned them yesterday.'},
+      {speaker:'Mara',text:'You talk?'},
+      {speaker:'Gus',text:'Only when the situation becomes meteorologically irresponsible.'},
+      {speaker:'Mara',text:'Were you waiting for me?'},
+      {speaker:'Gus',text:'I was waiting for someone with a lighthouse key and insufficient rain protection. You satisfy both requirements.'},
+      {speaker:'Mara',text:'Fine. You are coming with me.'},
+      {speaker:'Gus',text:'I prefer “consulting.” Carry me with the handle forward.'}
+    ],
+    completeEffects:[
+      {type:'setFlag',key:'gusTaken',value:true},
       {type:'setFlag',key:'officeComplete',value:true},
-      {type:'grantItems',items:['postcard','watch','lighthouse-key','passenger-card','vellum-photo','gus'],popupType:'YOU DISCOVERED'},
-      {type:'thought',text:'The note points to Captain Nib at Gannet’s End Harbor. He can take me to the lighthouse, where I can reveal The Never Was.'}
+      {type:'grantItems',items:['gus'],popupType:'YOU PICKED UP'},
+      {type:'thought',text:'Gus is now in the satchel and the harbor route is clear. This is already more companionship than I budgeted for.'}
     ]
   },
   'office.gus': {

@@ -32,6 +32,13 @@ export function interactOffice({ hotspotId, verb, selectedItem, state, api }) {
     return look(f.drillTriggered ? 'The official clock has advanced to tomorrow. Staffing remains inadequate.' : 'The official municipal clock. Four minutes slow since 1912, but correcting it would invalidate several treaties.');
   }
 
+  if (hotspotId === 'calendar') {
+    if (verb === 'pickup') return invalidPickup('The date board is wired into the municipal continuity system. Removing it would create several competing Tuesdays.');
+    return look(f.drillTriggered
+      ? 'The split-flap board has mechanically advanced itself by one day. Every letter looks smug about it.'
+      : 'An old split-flap date board connected to the official municipal calendar. It changes only when the system accepts that time has passed.');
+  }
+
   if (hotspotId === 'alarm') {
     if (selectedItem === 'alarm-handle' && verb === 'use' && !f.alarmRepaired) {
       api.removeItems(['alarm-handle']);
@@ -86,9 +93,12 @@ export function interactOffice({ hotspotId, verb, selectedItem, state, api }) {
   }
 
   if (hotspotId === 'gus') {
-    if (f.packageOpened && verb === 'talk') return api.dialogue('office.gus');
-    if (verb === 'pickup' && !f.packageOpened) return invalidPickup('It belongs to lost property. Taking it would be theft with excellent documentation.');
-    return look(f.packageOpened ? 'Gus looks folded, damp, and professionally offended.' : 'Black umbrella. Bent handle. Unreasonably disapproving posture.');
+    if (!f.packageOpened) {
+      if (verb === 'pickup') return invalidPickup('It belongs to lost property. Taking it would be theft with excellent documentation.');
+      return look('Black umbrella. Bent handle. Unreasonably disapproving posture.');
+    }
+    if (!f.gusTaken && ['pickup','use','talk'].includes(verb)) return api.dialogue('office.gus.pickup');
+    return look('Gus looks folded, damp, and professionally offended. He also appears to be waiting for me specifically, which is worse.');
   }
 
   if (hotspotId === 'map-exit') {

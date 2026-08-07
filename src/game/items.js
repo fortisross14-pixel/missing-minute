@@ -25,7 +25,8 @@ export const ITEMS = {
   funnel: { name:'Brass funnel', description:'Formerly part of a maritime pump. Currently between careers.', icon:assetUrl(`${A}funnel.svg`) },
   'amplified-duck-call': { name:'Amplified duck call', description:'More volume. Still too much duck.', icon:assetUrl(`${A}amplified-duck-call.svg`) },
   'wheezing-glove': { name:'Wheezing glove', description:'A balloon reconsidering its choices.', icon:assetUrl(`${A}wheezing-glove.svg`) },
-  'foghorn': { name:'Regulation-ish foghorn', description:'One glove, one duck call and one funnel. Approved by nobody.', icon:assetUrl(`${A}foghorn.svg`) }
+  'foghorn': { name:'Regulation-ish foghorn', description:'One glove, one duck call and one funnel. Approved by nobody.', icon:assetUrl(`${A}foghorn.svg`) },
+  'beacon-prism': { name:'Beacon prism', description:'A heavy triangular lens stamped PROPERTY OF THE DEPARTMENT OF LOST CAUSES. It refracts light and responsibility.', icon:assetUrl(`${A}beacon-prism.svg`) }
 };
 
 export const RECIPES = {
